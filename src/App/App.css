@@ -1,0 +1,70 @@
+@import url("https://fonts.googleapis.com/css?family=Muli");
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0.1px;
+  font-family: "Muli";
+}
+
+.side-conainer {
+  height: 100%;
+  min-height: 100vh;
+}
+
+.content {
+  overflow-x: scroll;
+  height: 100vh;
+}
+
+.mainblock {
+  padding: 10px;
+  background-color: #fff2e5;
+}
+
+.submit-button {
+  background-color: orange; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+}
+
+.final-button {
+  background-color: orange; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  outline: none;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  margin-top: 20px;
+  display: inline-block;
+  margin-left: calc(21% - 2px);
+  font-size: 16px;
+  width: 50%;
+}
+
+.save-button {
+  background-color: orange; /* Green */
+  border: none;
+  color: white;
+  padding: 8px 12px;
+  text-align: center;
+  text-decoration: none;
+  outline: none;
+  cursor: pointer;
+  margin-top: 20px;
+  display: inline-block;
+  font-size: 16px;
+  width: 50%;
+}
+
+.required:after {
+  content: " *";
+  color: black;
+}

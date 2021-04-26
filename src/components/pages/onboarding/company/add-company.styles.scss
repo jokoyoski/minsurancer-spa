@@ -1,0 +1,88 @@
+@mixin boxes($top, $left, $width, $height) {
+    position: absolute;
+    width: $width;
+    height: $height;
+    left: $left;
+    top: $top;
+    background-color: #c4cdff;
+    opacity: 0.3;
+}
+
+.add-company{
+
+   // display: flex;
+  //  flex-direction: column;
+    .first-card{
+        text-align: center;
+        background-color: #E9EDFF;
+        height:150px
+    }
+
+    .second-card{
+        width:70%;
+        height: 400px;
+        margin: 0 auto;
+        margin-top: 30px;
+        background-color: white;
+
+    }
+}
+
+
+
+@media (min-width:'700px')
+{
+    .add-company{
+
+        // display: flex;
+       //  flex-direction: column;
+         .first-card{
+             text-align: center;
+             background-color: #E9EDFF;
+             height:150px;
+             .first-box {
+                @include boxes(50px, 250px, 50px, 40px);
+            }
+            .second-box {
+                @include boxes(0px, -256px, 40px, 40px);
+            }
+            .third-box {
+                @include boxes(16px, 744px, 40px, 40px);
+            }
+            .fourth-box {
+                @include boxes(16px, 990px, 50px, 40px);
+            }
+            .fifth-box {
+                @include boxes(30px, 500px, 50px, 40px);
+            }
+            .sixth-box {
+                @include boxes(50px, 557x, 40px, 40px);
+            }
+            .seventh-box {
+                @include boxes(96px, 370px, 40px, 40px);
+            }
+            .eight-box {
+                @include boxes(76px, 881px, 40px, 40px);
+            }
+            .nineth-box {
+                @include boxes(86px, 580px, 50px, 40px);
+            }
+             
+         }
+     
+         .second-card{
+             width:40%;
+             height: 400px;
+             margin: 0 auto;
+             margin-top: 30px;
+             background-color: white;
+     
+         }
+     }
+}
+
+
+
+.form__group{
+    width:95% !important;
+}

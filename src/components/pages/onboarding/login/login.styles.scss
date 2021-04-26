@@ -1,0 +1,149 @@
+.makeStyles-root-1 .MuiFormControl-root {
+    width: 100% !important;
+    margin: 8px;
+}
+
+.MuiGrid-grid-xs-6 {
+    flex-grow: 0;
+    width: 90%;
+    flex-basis: 90%;
+}
+
+.form-section {
+    flex: 1 1 50%;
+    .inner-section {
+        .pic {
+            margin-left: 100px;
+        }
+        width: 90%;
+        margin: 0 auto;
+        padding-top: 10px;
+
+        .move-welcome-back {
+            margin-left: calc(22% - 2px);
+            font-size: 27px;
+        }
+
+        .move-enter-details {
+            margin-left: calc(25% - 2px);
+            font-size: 15px;
+        }
+
+        .move-pic {
+            margin-left: calc(-3% - 2px);
+        }
+        .inner-inner {
+            width: 50%;
+            margin: 0 auto;
+
+            .real-form {
+                .dont-have-acc-forget {
+                    margin-top: 30px;
+                    display: flex;
+                    flex-direction: row wrap;
+                    justify-content: space-between;
+                    .dont {
+                        display: flex;
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (min-width: 900px) {
+    .form-section {
+        flex: 1 1 50%;
+        .inner-section {
+            width: 90%;
+            margin: 0 auto;
+            padding-top: 100px;
+            .move-welcome-back {
+                margin-left: calc(27% - 2px);
+                font-size: 27px;
+            }
+    
+            .move-enter-details {
+                margin-left: calc(30% - 2px);
+                font-size: 15px;
+            }
+    
+            .move-pic {
+                margin-left: calc(-17% - 2px);
+            }
+            .inner-inner {
+                width: 100%;
+
+                .real-form {
+                    .dont-have-acc-forget {
+                        margin-top: 30px;
+                        display: flex;
+                        width: 100%;
+                        flex-direction: row;
+                        justify-content: space-between;
+                        .dont {
+                            display: flex;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 899px) {
+    .form-section {
+        flex: 1 1 50%;
+        margin-top: 100px;
+        .inner-section {
+            width: 90%;
+            margin: 0 auto;
+            padding-top: 10px;
+            .inner-inner {
+                width: 95%;
+                margin: 0 auto;
+
+                .real-form {
+                    .dont-have-acc-forget {
+                        width: 100%;
+                        margin-top: 30px;
+                        display: flex;
+                        flex-direction: row wrap;
+                        justify-content: space-between;
+                        .dont {
+                            display: flex;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+@media (max-width: 439px) {
+    .form-section {
+        flex: 1 1 50%;
+        .inner-section {
+            width: 90%;
+            margin: 0 auto;
+            padding-top: 10px;
+            .inner-inner {
+                width: 95%;
+                margin: 0 auto;
+
+                .real-form {
+                    .dont-have-acc-forget {
+                        width: 100%;
+                        margin-top: 30px;
+                        display: flex;
+                        flex-direction: row wrap;
+                        justify-content: space-between;
+                        .dont {
+                            display: flex;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

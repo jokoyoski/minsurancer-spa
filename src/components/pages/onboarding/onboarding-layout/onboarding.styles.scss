@@ -1,0 +1,35 @@
+.makeStyles-root-1 .MuiFormControl-root {
+    width: 100% !important;
+    margin: 8px;
+}
+
+.MuiGrid-grid-xs-6 {
+    flex-grow: 0;
+    width: 90%;
+    flex-basis: 90%;
+}
+.login-section {
+    display: flex;
+    .picture-section {
+        display: none;
+    }
+}
+
+@media (min-width: 900px) {
+    .picture-section {
+        display: block;
+        flex: 50%;
+    }
+}
+
+@media (max-width: 899px) {
+    .picture-section {
+        display: none;
+    }
+}
+
+@media (max-width: 439px) {
+    .picture-section {
+        display: none;
+    }
+}

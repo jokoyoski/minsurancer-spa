@@ -1,0 +1,129 @@
+.avatar {
+    height: 35px;
+    width: 35px;
+    border-radius: 50px;
+    margin-left: 14px;
+    border: 1px solid #dfe0eb;
+}
+.container {
+    height: 40px;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
+.name {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 20px;
+    text-align: right;
+    letter-spacing: 0.2px;
+    @media (max-width: 768px) {
+        display: none;
+    }
+}
+.separator {
+    border-left: 1px solid #dfe0eb;
+    margin-left: 32px;
+    margin-right: 32px;
+    height: 32px;
+    width: 2px;
+    @media (max-width: 768px) {
+        margin-left: 12px;
+        margin-right: 12px;
+    }
+}
+.title {
+    font-family: Muli;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 1rem;
+    line-height: 30px;
+    letter-spacing: 0.3px;
+    @media (max-width: 768px) {
+        margin-left: 36px;
+    }
+    @media (max-width: 468px) {
+        font-size: 20px;
+    }
+}
+.iconStyles {
+    cursor: pointer;
+    margin-left: 25px;
+    @media (max-width: 768px) {
+        margin-left: 12px;
+    }
+}
+
+a {
+    text-decoration: none;
+}
+
+nav {
+    font-family: monospace;
+}
+
+ul {
+    background: white;
+    list-style: none;
+    margin: 0;
+    padding-left: 0;
+}
+
+li {
+    color: black;
+    background: white;
+    display: block;
+    float: left;
+    padding: 1rem;
+    z-index: 300;
+    position: relative;
+    text-decoration: none;
+    -webkit-transition-duration: 100000.5s;
+}
+
+li a {
+    color: black;
+}
+li ul li a{
+    width: 20px;
+    transition: width 2s ease;
+}
+li ul li a:hover{
+    color: #333996;
+    width: 200px;
+}
+
+li:hover {
+    background: white;
+    cursor: pointer;
+}
+
+
+ul li ul {
+    background: white;
+    visibility: hidden;
+    opacity: 0;
+    width: 6rem;
+    position: absolute;
+    height: 20px;
+    transition: visibility 10s ease;
+    -webkit-transition:  visibility 10s ease;
+    margin-top: 1rem;
+    left: 0;
+    display: none;
+}
+
+ul li:hover > ul,
+ul li ul:hover {
+    visibility: visible;
+    opacity: 1;
+    display: block;
+    background-color: white;
+}
+
+ul li ul li {
+    clear: both;
+    width: 100%;
+}

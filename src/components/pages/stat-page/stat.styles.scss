@@ -1,0 +1,33 @@
+@mixin boxes($top, $left, $width, $height) {
+    position: absolute;
+    width: $width;
+    height: $height;
+    left: $left;
+    top: $top;
+    background-color: #c4cdff;
+    opacity: 0.3;
+}
+.name-section {
+    background-color: #e9edff;
+    height: 100px;
+    position: relative;
+    margin: -75px 10px 10px 0px;
+
+    
+}
+
+.stat-area {
+    display: flex;
+    justify-content: space-between;
+    margin: 10px;
+    .stat-box {
+        width: 24%;
+        color:'#B6BBD5';
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        background-color: white;
+        height: 115px;
+    }
+}
