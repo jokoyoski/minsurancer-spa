@@ -71,7 +71,7 @@ ul {
     padding-left: 0;
 }
 
-li {
+.nav-item {
     color: black;
     background: white;
     display: block;
@@ -83,25 +83,25 @@ li {
     -webkit-transition-duration: 100000.5s;
 }
 
-li a {
+.nav-item a {
     color: black;
 }
-li ul li a{
+.nav-item ul .nav-item a{
     width: 20px;
     transition: width 2s ease;
 }
-li ul li a:hover{
+.nav-item ul .nav-item a:hover{
     color: #333996;
     width: 200px;
 }
 
-li:hover {
+.nav-item:hover {
     background: white;
     cursor: pointer;
 }
 
 
-ul li ul {
+ul .nav-item ul {
     background: white;
     visibility: hidden;
     opacity: 0;
@@ -115,15 +115,15 @@ ul li ul {
     display: none;
 }
 
-ul li:hover > ul,
-ul li ul:hover {
+ul .nav-item:hover > ul,
+ul .nav-item ul:hover {
     visibility: visible;
     opacity: 1;
     display: block;
     background-color: white;
 }
 
-ul li ul li {
+ul .nav-item ul .nav-item {
     clear: both;
     width: 100%;
 }
