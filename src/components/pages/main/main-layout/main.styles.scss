@@ -1,29 +1,28 @@
 .main-layout {
-    display: flex;
-    max-height: 700px;
-    .first {
-        height: 100%;
-    }
-    .main-area {
-        flex: 1 1 85%;
-        overflow-y: auto;
-        overflow-x: auto;
-       max-height: 650px;
-    }
+  display: flex;
+  // max-height: 700px;
+  .first {
+    height: 100%;
+  }
+  .main-area {
+    flex: 1 1 85%;
+    // overflow-y: auto;
+    overflow-x: auto;
+    // max-height: 100%;
+  }
 }
 
 @media (max-width: 768px) {
-    .main-layout {
-        max-height: 700px;
-        display: flex;
-        .first {
-            width:0px;
-            height: 100%;
-        }
-        .main-area {
-            flex: 1 1 100%;
-            max-height: 70%;
-           
-        }
+  .main-layout {
+    max-height: 700px;
+    display: flex;
+    .first {
+      width: 0px;
+      height: 100%;
     }
+    .main-area {
+      flex: 1 1 100%;
+      max-height: 70%;
+    }
+  }
 }
