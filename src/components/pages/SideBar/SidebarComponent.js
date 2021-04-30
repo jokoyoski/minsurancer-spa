@@ -102,9 +102,9 @@ class SidebarComponent extends React.Component {
                         </div>
                         <Column className={css(styles.menuItemList)}>
                            {SideBarData.map((value) => {
-                                if (value.role.split(",").includes(roles[0])) {
+                              //  if (value.role.split(",").includes(roles[0])) {
                                     return <SubMenu {...value} key={value.title} />
-                                }
+                               // }
                             }
                             )}
                         </Column>

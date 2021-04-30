@@ -38,14 +38,13 @@ export default function AddEmployeeForm(props) {
             temp.email = fieldValues.email ? "" : "This email is required."
         if ('phoneNumber' in fieldValues)
             temp.phoneNumber = fieldValues.phoneNumber.length > 9 ? "" : "Minimum 10 numbers required."
-        if ('roleId' in fieldValues)
-            temp.roleId = fieldValues.roleId !== "" ? "" : "Select a role"
+
         setErrors({
             ...temp
         })
 
         if (fieldValues === values)
-        return Object.values(temp).every(x => x === "")
+            return Object.values(temp).every(x => x === "")
     }
 
     const {
@@ -106,29 +105,14 @@ export default function AddEmployeeForm(props) {
                         error={errors.phoneNumber}
                     />
 
-                </Grid>
-                <Grid item xs={6}>
-                    <Controls.Select
-                        name="roleId"
-                        label="Roles"
-                        value={values.roleId || ''}
-                        onChange={handleInputChange}
-                        options={props.roles}
-                        error={errors.roleId}
-                    />
-                    <Controls.DatePicker
-                        name="hireDate"
-                        label="Hire Date"
-                        value={values.dateCreated}
-                        onChange={handleInputChange}
-                    />
-
                     <div>
                         <Controls.Button
                             type="submit"
                             text="Submit" />
                     </div>
                 </Grid>
+
+
             </Grid>
         </Form>
     )

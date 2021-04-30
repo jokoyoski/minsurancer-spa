@@ -12,14 +12,16 @@ function* workerSaga(action) {
     try {
         yield put({ type: "DISPLAY_LOADER", payload: payload })
        var payload={}
-        const formatUrl = 'api/Authentication/get-users-company?cacNumber='+action.payload
+       const formatUrl = `api/Authentication/search-user?searchTerm=${action.payload.searchTerm}&userType=${action.payload.userType}&pageNumber=${action.payload.pageNumber}`
         yield request("get",payload,formatUrl).then(response => {
             payload = response;
         });
-        yield put({ type: "USERS_LIST", payload: payload })
+        yield put({ type: "USERS_LIST", payload: payload.users })
+        yield put({ type: "CURRENT_PAGE", payload: payload.currentPage })
+        yield put({ type: "ITEMS_PER_PAGE", payload: payload.pageSize })
+        yield put({ type: "TOTAL_ITEMS", payload: payload.totalCount })
+        yield put({ type: "TOTAL_PAGES", payload: payload.totalPages })
         yield put({ type: "DISPLAY_LOADER", payload: payload })
-       
-
 
     } catch (e) {
         yield put({ type: "LOADING_BUTTON_SPINNER" });

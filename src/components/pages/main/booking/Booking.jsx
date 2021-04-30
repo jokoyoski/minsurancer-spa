@@ -68,18 +68,18 @@ export function Booking({ bookings, UpdateBooking, LoadBookings, statuses,
     }, [page])
 
 
-   /* const handleSearch = e => {
-        let target = e.target;
-        setFilterFn({
-            fn: items => {
-
-                if (target.value === "")
-                    return items;
-                else
-                    return items.filter(x => x.ProductName.toLowerCase().includes(target.value))
-            }
-        })
-    }*/
+    /* const handleSearch = e => {
+         let target = e.target;
+         setFilterFn({
+             fn: items => {
+ 
+                 if (target.value === "")
+                     return items;
+                 else
+                     return items.filter(x => x.ProductName.toLowerCase().includes(target.value))
+             }
+         })
+     }*/
 
 
 
@@ -102,7 +102,7 @@ export function Booking({ bookings, UpdateBooking, LoadBookings, statuses,
 
     return (
 
-        <div style={{ overflowX: 'scroll', height: '700px' }}>
+        <div style={{ height: '700px' }}>
             <Column flexGrow={1}>
                 <StatComponent />
                 <ToastContainer />
@@ -140,7 +140,7 @@ export function Booking({ bookings, UpdateBooking, LoadBookings, statuses,
                             LoadBookings(value)
                         }}
                     />
-                 
+
                 </Paper>
                 <Popup
                     title="Booking Form"

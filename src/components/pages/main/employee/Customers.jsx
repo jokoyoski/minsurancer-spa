@@ -1,14 +1,18 @@
+
+  
 import React, { useState, useEffect } from 'react'
-import LocationForm from "./LocationForm";
+import {CustomerDetailForm}  from "./CustomerDetailForm";
 import { Column, Row } from 'simple-flexbox';
 import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@material-ui/core';
+import './employee.styles.scss';
 import useTable from "../../../utilities/useTable";
+import Pagination from "../../../utilities/Pagination";
 import { ToastContainer } from 'react-toastify';
+import * as employeeService from "../../../../services/employeeService";
 import StatComponent from '../../stat-page/StatComponent';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from "react-redux";
 import Controls from "../../../controls/Controls";
-import Pagination from "../../../utilities/Pagination";
 import { Search } from "@material-ui/icons";
 import AddIcon from '@material-ui/icons/Add';
 import Popup from "../../../utilities/Popup";
@@ -16,7 +20,8 @@ import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import CloseIcon from '@material-ui/icons/Close';
 import Notification from "../../../utilities/Notification";
 import ConfirmDialog from "../../../utilities/ConfirmDialog";
-import AddLocationForm from './AddLocationForm';
+import AddEmployeeForm from './AddEmployeForm';
+import UserLocationForm from './UserLocationForm';
 
 const useStyles = makeStyles(theme => ({
     pageContent: {
@@ -34,14 +39,13 @@ const useStyles = makeStyles(theme => ({
 
 
 const headCells = [
-    { id: 'name', label: 'Name' },
-    { id: 'isActive', label: 'Is Active' },
-    { id: '', label: '' },
+    { id: 'fullName', label: 'Employee Name' },
+    { id: 'LastName', label: 'Last Name' },
+    { id: 'mobile', label: 'Mobile Number' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
-export function Locations({ locations, AddLocation, LoadLocations,UpdateLocation,DeleteLocation,statuses,
-    currentPage, itemsPerPage, totalItems, totalPages }) {
+export function Customers({ users, UpdateUser, LoadUsers, cacNumber, AddUser , currentPage, itemsPerPage, totalItems, totalPages}) {
 
 
     const classes = useStyles();
@@ -49,17 +53,25 @@ export function Locations({ locations, AddLocation, LoadLocations,UpdateLocation
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
     const [openPopup, setOpenPopup] = useState(false)
     const [addOpenPopup, setAddOpenPopup] = useState(false)
+    const [userLocationOpenPopup, setuserLocationOpenPopup] = useState(false)
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+    var searchTerm=""
     const {
         TblContainer,
         TblHead,
         TblPagination,
         recordsAfterPagingAndSorting
-    } = useTable(locations, headCells, filterFn);
+    } = useTable([], headCells, filterFn);
 
     useEffect(() => {
-        LoadLocations(1)
+      
+      var data={
+        pageNumber:1,
+        userType:'Customer',
+        searchTerm:''
+      }
+        LoadUsers(data)
         return () => {
 
         }
@@ -67,49 +79,59 @@ export function Locations({ locations, AddLocation, LoadLocations,UpdateLocation
 
     const handleSearch = e => {
         let target = e.target;
-        setFilterFn({
-            fn: items => {
+        searchTerm=target.value
+        var data={
+            pageNumber:1,
+            userType:'Customer',
+            searchTerm:target.value
+          }
+            LoadUsers(data)
+    }
 
-                if (target.value === "")
-                    return items;
-                else
-                    return items.filter(x => x.firstName.toLowerCase().includes(target.value))
-            }
+    const addOrEdit = (employee, resetForm) => {
+        if (employee.id === 0)
+            AddUser(employee)
+        else
+            var data = { ...employee, 'userId': employee.id }
+        UpdateUser(data)
+        resetForm()
+        // setRecordForEdit(null)
+        setOpenPopup(false)
+        setNotify({
+            isOpen: true,
+            message: 'Submitted Successfully',
+            type: 'success'
         })
     }
 
-    const addOrEdit = (Location, resetForm) => {
-        if (Location.id === 0)
-            AddLocation(Location)
-        else
-        UpdateLocation(Location)
-        resetForm()
-        setAddOpenPopup(false)
-        setOpenPopup(false)
-    }
 
 
 
-
-    const addLocation = (Location, resetForm) => {
-        AddLocation(Location)
+    const addEmployee = (employee, resetForm) => {
+      var data={...employee,password:employee.email,confirmPassword:employee.email}
+        AddUser(data)
         resetForm()
         setRecordForEdit(null)
-        setOpenPopup(false)
         setAddOpenPopup(false)
+        setOpenPopup(false)
     }
 
     const openInPopup = item => {
         setRecordForEdit(item)
         setOpenPopup(true)
     }
+    const userLocationInPopup = item => {
+        setRecordForEdit(item)
+        setuserLocationOpenPopup(true)
+    }
 
     const onDelete = id => {
-        DeleteLocation(id)
         setConfirmDialog({
             ...confirmDialog,
             isOpen: false
         })
+        employeeService.deleteEmployee(id);
+        var record = employeeService.getAllEmployees()
     }
     return (
 
@@ -118,9 +140,18 @@ export function Locations({ locations, AddLocation, LoadLocations,UpdateLocation
                 <StatComponent />
                 <ToastContainer />
                 <div style={{ margin: '10px 0px 0px 80px', width: '95%', }}>
+                    <Controls.Input
+                        label="Search Employees"
+                        className={classes.searchInput}
+                        InputProps={{
+                            startAdornment: (<InputAdornment position="start">
+                                <Search />
+                            </InputAdornment>)
+                        }}
+                        onChange={handleSearch}
+                    />
                 </div>
                 <Paper className={classes.pageContent}>
-                    <h2>Location</h2>
                     <Toolbar>
                         <Controls.Button
                             text="Add New"
@@ -135,30 +166,18 @@ export function Locations({ locations, AddLocation, LoadLocations,UpdateLocation
                         <TableBody>
                             {
 
-                                locations.map(item =>
+                              users.map(item =>
                                 (<TableRow key={item.id}>
-                                    <TableCell>{item.name}</TableCell>
-                                    <TableCell>{item.isActive.toString()}</TableCell>
-                                    <TableCell><Controls.ActionButton
+                                    <TableCell>{item.firstName}</TableCell>
+                                    <TableCell>{item.lastName}</TableCell>
+                                    <TableCell>{item.phoneNumber}</TableCell>
+                                    <TableCell>
+                                        <Controls.ActionButton
                                             color="primary"
                                             onClick={() => {
                                                 openInPopup(item)
                                             }}>
                                             <EditOutlinedIcon fontSize="small" />
-                                        </Controls.ActionButton></TableCell>
-                                   
-                                    <TableCell>
-                                        <Controls.ActionButton
-                                            color="secondary"
-                                            onClick={() => {
-                                                setConfirmDialog({
-                                                    isOpen: true,
-                                                    title: 'Are you sure to delete this record?',
-                                                    subTitle: "You can't undo this operation",
-                                                    onConfirm: () => { onDelete(item.id) }
-                                                })
-                                            }}>
-                                            <CloseIcon fontSize="small" />
                                         </Controls.ActionButton>
                                     </TableCell>
                                 </TableRow>)
@@ -170,31 +189,49 @@ export function Locations({ locations, AddLocation, LoadLocations,UpdateLocation
                         count={totalItems}
                         pageSize={10}
                         fetchMethod={(value) => {
-                            LoadLocations(value)
+                          var data={
+                            pageNumber:value,
+                            userType:'Admin',
+                            searchTerm:searchTerm
+                          }
+                            LoadUsers(data)
                         }}
                     />
+                    
                 </Paper>
                 <Popup
-                    title="Location Form"
+                    title="Employee Form"
                     openPopup={openPopup}
                     setOpenPopup={setOpenPopup}
                 >
-                    <LocationForm
+                    <CustomerDetailForm
                         recordForEdit={recordForEdit}
                         addOrEdit={addOrEdit}
-                    />
+                         />
                 </Popup>
 
                 <Popup
-                    title="Add Location Form"
+                    title="Update User Location"
+                    openPopup={userLocationOpenPopup}
+                    setOpenPopup={setuserLocationOpenPopup}
+                >
+
+                    <UserLocationForm
+                        recordForEdit={recordForEdit}
+                        userId={4}
+                       />
+                </Popup>
+                <Popup
+                    title="Employee Form"
                     openPopup={addOpenPopup}
                     setOpenPopup={setAddOpenPopup}
                 >
 
-                    <AddLocationForm
+                    <AddEmployeeForm
                         recordForEdit={recordForEdit}
-                        addLocation={addLocation}
-                    />
+                        addEmployee={addEmployee}
+                        cacNumber={cacNumber}
+                      />
                 </Popup>
                 <Notification
                     notify={notify}
@@ -216,33 +253,30 @@ export function Locations({ locations, AddLocation, LoadLocations,UpdateLocation
 
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
+        buttonloader: state.utilityReducer.buttonloader,
+        user: state.userReducer.user,
+        cacNumber: state.userReducer.cacNumber,
+        users: state.usersReducer.users,
         currentPage: state.utilityReducer.currentPage,
         itemsPerPage: state.utilityReducer.itemsPerPage,
         totalItems: state.utilityReducer.totalItems,
         totalPages: state.utilityReducer.totalPages,
-        buttonloader: state.utilityReducer.buttonloader,
-        locations: state.locationReducer.locations,
+        userType:state.userReducer.userType
 
     };
 }
 const mapDispatchToProps = (dispatch) => ({
 
-    UpdateLocation(payload) {
-        dispatch({ type: "UPDATE_LOCATION", payload });
+    UpdateUser(payload) {
+        dispatch({ type: "UPDATE_USER", payload });
     },
 
-    LoadLocations(payload) {
-        dispatch({ type: "LOAD_LOCATIONS", payload });
+    LoadUsers(payload) {
+        dispatch({ type: "LOAD_USERS", payload });
     },
-    AddLocation(payload) {
-        dispatch({ type: "ADD_LOCATION", payload });
-    },
-
-
-    DeleteLocation(payload) {
-        dispatch({ type: "DELETE_LOCATION", payload });
+    AddUser(payload) {
+        dispatch({ type: "ADD_USER", payload });
     },
 
 })
@@ -250,4 +284,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Locations);
+)(Customers);

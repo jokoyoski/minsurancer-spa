@@ -1,9 +1,12 @@
+
+  
 import React, { useState, useEffect } from 'react'
 import EmployeeForm from "./EmployeeForm";
 import { Column, Row } from 'simple-flexbox';
 import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@material-ui/core';
 import './employee.styles.scss';
 import useTable from "../../../utilities/useTable";
+import Pagination from "../../../utilities/Pagination";
 import { ToastContainer } from 'react-toastify';
 import * as employeeService from "../../../../services/employeeService";
 import StatComponent from '../../stat-page/StatComponent';
@@ -19,7 +22,6 @@ import Notification from "../../../utilities/Notification";
 import ConfirmDialog from "../../../utilities/ConfirmDialog";
 import AddEmployeeForm from './AddEmployeForm';
 import UserLocationForm from './UserLocationForm';
-import Pagination from '../../../utilities/Pagination';
 
 const useStyles = makeStyles(theme => ({
     pageContent: {
@@ -43,23 +45,7 @@ const headCells = [
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
-const employees = [
-    {firstName: 'Jokoyosky', lastName: 'Makanga', mobile: '080', actions: 'View'},
-    {firstName: 'Jokoyosky', lastName: 'Makanga', mobile: '080', actions: 'View'},
-    {firstName: 'Jokoyosky', lastName: 'Makanga', mobile: '080', actions: 'View'},
-    {firstName: 'Jokoyosky', lastName: 'Makanga', mobile: '080', actions: 'View'},
-    {firstName: 'Jokoyosky', lastName: 'Makanga', mobile: '080', actions: 'View'},
-    {firstName: 'Jokoyosky', lastName: 'Makanga', mobile: '080', actions: 'View'},
-    {firstName: 'Jokoyosky', lastName: 'Makanga', mobile: '080', actions: 'View'},
-    {firstName: 'Jokoyosky', lastName: 'Makanga', mobile: '080', actions: 'View'},
-    {firstName: 'Jokoyosky', lastName: 'Makanga', mobile: '080', actions: 'View'},
-    {firstName: 'Jokoyosky', lastName: 'Makanga', mobile: '080', actions: 'View'},
-    {firstName: 'Makanga', lastName: 'Makanga', mobile: '080', actions: 'View'},
-    {firstName: 'Jokoyosky', lastName: 'Makanga', mobile: '080', actions: 'View'},
-    {firstName: 'Jokoyosky', lastName: 'Makanga', mobile: '080', actions: 'View'},
-]
-
-export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser ,userType}) {
+export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , currentPage, itemsPerPage, totalItems, totalPages}) {
 
 
     const classes = useStyles();
@@ -69,55 +55,26 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser ,us
     const [addOpenPopup, setAddOpenPopup] = useState(false)
     const [userLocationOpenPopup, setuserLocationOpenPopup] = useState(false)
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
-    const [ confirmDialog, setConfirmDialog ] = useState({ isOpen: false, title: '', subTitle: '' })
-    const [ usersToDisplay, setUsersToDisplay ] = useState([])
-    const pageSize = 10;
+    const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
     const {
         TblContainer,
         TblHead,
         TblPagination,
         recordsAfterPagingAndSorting
-    } = useTable(users.length == 0 ? users : users.userInfo, headCells, filterFn);
+    } = useTable([], headCells, filterFn);
 
-   
+    useEffect(() => {
+      var data={
+        pageNumber:1,
+        userType:'Admin',
+        searchTerm:''
+      }
+        LoadUsers(data)
+        return () => {
 
-    const displayUsers = (pageNo = 1, callback) => {
-        const userList = employees.slice((pageNo - 1) * pageSize, (pageNo * pageSize)).map((value, index) => {
-        const { firstName, lastName, mobile, actions} = value;
-        return (
-            <TableRow key={index}>
-                <TableCell className="font-weight-bold">{firstName} </TableCell>
-                <TableCell className="font-weight-bold">{lastName}</TableCell>
-                <TableCell className="font-weight-bold">{mobile}</TableCell>
-                <TableCell className="font-weight-bold">{actions}</TableCell>
-                {/* <TableCell className="table-date">
-                    {shortDayNames[d.getDay() - 1]} {d.getDate()},{" "}
-                    {shortMonthNames[d.getMonth()]} {d.getFullYear()}
-                </TableCell> */}
-                {/* {status.toUpperCase() === "ACTIVE" ? (
-                    <TableCell className="table-status">
-                    <div className="status-btn success">{"Active"}</div>
-                    </TableCell>
-                ) : (
-                    <TableCell className="table-status">
-                    <div className="status-btn error">{"Suspended"}</div>
-                    </TableCell>
-                )}
-                {getUserProperties().permissions.indexOf(permissions.VIEW_USER) > 1 && <TableCell className="table-action" onClick={() => callback(value)}>
-                    
-                    View
-                </TableCell>} */}
-            </TableRow>
-        );
-        });
-        setUsersToDisplay(userList)
-    };
- useEffect(() => {
-     LoadUsers(cacNumber);
-     displayUsers(1, () => {
-     });
-   return () => {};
- }, []);
+        }
+    }, [])
+
     const handleSearch = e => {
         let target = e.target;
         setFilterFn({
@@ -151,9 +108,11 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser ,us
 
 
     const addEmployee = (employee, resetForm) => {
-        AddUser(employee)
+      var data={...employee,password:employee.email,confirmPassword:employee.email}
+        AddUser(data)
         resetForm()
         setRecordForEdit(null)
+        setAddOpenPopup(false)
         setOpenPopup(false)
     }
 
@@ -175,114 +134,118 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser ,us
         var record = employeeService.getAllEmployees()
     }
     return (
-    //   <div style={{overflowX: "scroll", height: "700px"}}>
-      <div style={{overflowX: "scroll"}}>
-        <Column flexGrow={1}>
-          <StatComponent />
-          <ToastContainer />
-          <div style={{margin: "10px 0px 0px 80px", width: "95%"}}>
-            <Controls.Input
-              label="Search Employees"
-              className={classes.searchInput}
-              InputProps={{
-                startAdornment: (
-                  <InputAdornment position="start">
-                    <Search />
-                  </InputAdornment>
-                ),
-              }}
-              onChange={handleSearch}
-            />
-          </div>
-          <Paper className={classes.pageContent}>
-            <Toolbar>
-              <Controls.Button
-                text="Add New"
-                variant="outlined"
-                startIcon={<AddIcon />}
-                className={classes.newButton}
-                onClick={() => {
-                  setAddOpenPopup(true);
-                  setRecordForEdit(null);
-                }}
-              />
-            </Toolbar>
-            <TblContainer>
-              <TblHead />
-              <TableBody>
-                {/* {recordsAfterPagingAndSorting().map((item) => (
-                  <TableRow key={item.id}>
-                    <TableCell>{item.firstName}</TableCell>
-                    <TableCell>{item.lastName}</TableCell>
-                    <TableCell>{item.phoneNumber}</TableCell>
-                    <TableCell>
-                      <Controls.ActionButton
-                        color="primary"
-                        onClick={() => {
-                          openInPopup(item);
-                        }}
-                      >
-                        <EditOutlinedIcon fontSize="small" />
-                      </Controls.ActionButton>
-                      <Controls.ActionButton
-                        color="primary"
-                        onClick={() => {
-                          userLocationInPopup(item);
-                        }}
-                      >
-                        <EditOutlinedIcon fontSize="small" />
-                      </Controls.ActionButton>
-                    </TableCell>
-                  </TableRow>
-                ))} */}
-                  {employees.length > 0 && usersToDisplay}
-              </TableBody>
-            </TblContainer>
-            {/* <TblPagination /> */}
-                <Pagination count={employees.length} pageSize={pageSize} fetchMethod={(value, pageSize) => {
-                    displayUsers(value);
-                }} />
-                </Paper>
-          <Popup
-            title="Employee Form"
-            openPopup={openPopup}
-            setOpenPopup={setOpenPopup}
-          >
-            <EmployeeForm
-              recordForEdit={recordForEdit}
-              addOrEdit={addOrEdit}
-              roles={users.roles}
-            />
-          </Popup>
 
-          <Popup
-            title="Update User Location"
-            openPopup={userLocationOpenPopup}
-            setOpenPopup={setuserLocationOpenPopup}
-          >
-            <UserLocationForm recordForEdit={recordForEdit} userId={4} />
-          </Popup>
-          <Popup
-            title="Add Employee Form"
-            openPopup={addOpenPopup}
-            setOpenPopup={setAddOpenPopup}
-          >
-            <AddEmployeeForm
-              recordForEdit={recordForEdit}
-              addEmployee={addEmployee}
-              userType={userType}
-              cacNumber={cacNumber}
-              roles={users.roles}
-            />
-          </Popup>
-          <Notification notify={notify} setNotify={setNotify} />
-          <ConfirmDialog
-            confirmDialog={confirmDialog}
-            setConfirmDialog={setConfirmDialog}
-          />
-        </Column>
-      </div>
-    );
+        <div style={{ height: '700px' }}>
+            <Column flexGrow={1}>
+                <StatComponent />
+                <ToastContainer />
+                <div style={{ margin: '10px 0px 0px 80px', width: '95%', }}>
+                    <Controls.Input
+                        label="Search Employees"
+                        className={classes.searchInput}
+                        InputProps={{
+                            startAdornment: (<InputAdornment position="start">
+                                <Search />
+                            </InputAdornment>)
+                        }}
+                        onChange={handleSearch}
+                    />
+                </div>
+                <Paper className={classes.pageContent}>
+                    <Toolbar>
+                        <Controls.Button
+                            text="Add New"
+                            variant="outlined"
+                            startIcon={<AddIcon />}
+                            className={classes.newButton}
+                            onClick={() => { setAddOpenPopup(true); setRecordForEdit(null); }}
+                        />
+                    </Toolbar>
+                    <TblContainer>
+                        <TblHead />
+                        <TableBody>
+                            {
+
+                              users.map(item =>
+                                (<TableRow key={item.id}>
+                                    <TableCell>{item.firstName}</TableCell>
+                                    <TableCell>{item.lastName}</TableCell>
+                                    <TableCell>{item.phoneNumber}</TableCell>
+                                    <TableCell>
+                                        <Controls.ActionButton
+                                            color="primary"
+                                            onClick={() => {
+                                                openInPopup(item)
+                                            }}>
+                                            <EditOutlinedIcon fontSize="small" />
+                                        </Controls.ActionButton>
+                                    </TableCell>
+                                </TableRow>)
+                                )
+                            }
+                        </TableBody>
+                    </TblContainer>
+                    <Pagination
+                        count={totalItems}
+                        pageSize={10}
+                        fetchMethod={(value) => {
+                          var data={
+                            pageNumber:value,
+                            userType:'Admin',
+                            searchTerm:''
+                          }
+                            LoadUsers(data)
+                        }}
+                    />
+                    
+                </Paper>
+                <Popup
+                    title="Employee Form"
+                    openPopup={openPopup}
+                    setOpenPopup={setOpenPopup}
+                >
+                    <EmployeeForm
+                        recordForEdit={recordForEdit}
+                        addOrEdit={addOrEdit}
+                         />
+                </Popup>
+
+                <Popup
+                    title="Update User Location"
+                    openPopup={userLocationOpenPopup}
+                    setOpenPopup={setuserLocationOpenPopup}
+                >
+
+                    <UserLocationForm
+                        recordForEdit={recordForEdit}
+                        userId={4}
+                       />
+                </Popup>
+                <Popup
+                    title="Employee Form"
+                    openPopup={addOpenPopup}
+                    setOpenPopup={setAddOpenPopup}
+                >
+
+                    <AddEmployeeForm
+                        recordForEdit={recordForEdit}
+                        addEmployee={addEmployee}
+                        cacNumber={cacNumber}
+                      />
+                </Popup>
+                <Notification
+                    notify={notify}
+                    setNotify={setNotify}
+                />
+                <ConfirmDialog
+                    confirmDialog={confirmDialog}
+                    setConfirmDialog={setConfirmDialog}
+                />
+            </Column>
+
+        </div>
+
+    )
 }
 
 
@@ -295,6 +258,10 @@ function mapStateToProps(state) {
         user: state.userReducer.user,
         cacNumber: state.userReducer.cacNumber,
         users: state.usersReducer.users,
+        currentPage: state.utilityReducer.currentPage,
+        itemsPerPage: state.utilityReducer.itemsPerPage,
+        totalItems: state.utilityReducer.totalItems,
+        totalPages: state.utilityReducer.totalPages,
         userType:state.userReducer.userType
 
     };

@@ -122,7 +122,7 @@ export function Product({ products, UpdateProduct, DeleteProduct, LoadProducts, 
     }
     return (
 
-        <div style={{ overflowX: 'scroll', height: '700px' }}>
+        <div style={{  height: '700px' }}>
             <Column flexGrow={1}>
                 <StatComponent />
                 <ToastContainer />

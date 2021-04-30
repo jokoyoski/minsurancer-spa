@@ -32,11 +32,6 @@ export const SideBarData = [
                 icon: <i className="fas fa-cart-plus"></i>,
             },
             {
-                title: 'Edit Profile',
-                path: '/main/user',
-                icon: <i className="fas fa-user"></i>,
-            },
-            {
                 title: 'Bookings',
                 path: '/main/bookings',
                 icon: <i className="fas fa-users"></i>,
@@ -74,6 +69,41 @@ export const SideBarData = [
 
         ]
     },
+
+    {
+        title: 'User Managment',
+        path: '/main/',
+        icon: <i className="fas fa-users"></i>,
+        iconClosed: <RiIcons.RiArrowDownSFill />,
+        iconOpened: <RiIcons.RiArrowUpSFill />,
+        role:'System Admin',
+        id: 39,
+        subNav: [
+
+            {
+                title: 'Customers',
+                path: '/main/customers',
+                icon: <i className="fas fa-users"></i>,
+            },
+            {
+                title: 'Minsurancer User',
+                path: '/main/users',
+                icon: <i className="fas fa-users"></i>,
+            },
+            {
+                title: 'Edit Profile',
+                path: '/main/user',
+                icon: <i className="fas fa-user"></i>,
+            }
+
+
+
+
+
+        ]
+    },
+
+
 
 
     
