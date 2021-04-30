@@ -5,6 +5,7 @@ import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornm
 import useTable from "../../../utilities/useTable";
 import { ToastContainer } from 'react-toastify';
 import StatComponent from '../../stat-page/StatComponent';
+import Pagination from "../../../utilities/Pagination";
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from "react-redux";
 import Controls from "../../../controls/Controls";
@@ -34,13 +35,20 @@ const useStyles = makeStyles(theme => ({
 
 const headCells = [
     { id: 'productName', label: 'Product Name' },
-    { id: 'productDescription', label: 'Product DescriptionD' },
+    { id: 'price', label: 'Price' },
     { id: 'categoryName', label: 'Category Name' },
     { id: 'status', label: 'Status' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
-export function Product({ products, UpdateProduct, DeleteProduct,LoadProducts, companyId, AddProduct, categories }) {
+
+const handleInputChange = e => {
+    const { name, value } = e.target
+
+}
+
+export function Product({ products, UpdateProduct, DeleteProduct, LoadProducts, companyId, AddProduct, categories
+    , currentPage, itemsPerPage, totalItems, totalPages }) {
 
 
     const classes = useStyles();
@@ -58,7 +66,7 @@ export function Product({ products, UpdateProduct, DeleteProduct,LoadProducts, c
     } = useTable(products, headCells, filterFn);
 
     useEffect(() => {
-        LoadProducts(companyId)
+        LoadProducts(1)
         return () => {
 
         }
@@ -86,7 +94,7 @@ export function Product({ products, UpdateProduct, DeleteProduct,LoadProducts, c
         resetForm()
         // setRecordForEdit(null)
         setOpenPopup(false)
-        
+
     }
 
 
@@ -139,16 +147,17 @@ export function Product({ products, UpdateProduct, DeleteProduct,LoadProducts, c
                             className={classes.newButton}
                             onClick={() => { setAddOpenPopup(true); setRecordForEdit(null); }}
                         />
+
                     </Toolbar>
                     <TblContainer>
                         <TblHead />
                         <TableBody>
                             {
 
-                                recordsAfterPagingAndSorting().map(item =>
+                                products.map(item =>
                                 (<TableRow key={item.id}>
                                     <TableCell>{item.productName}</TableCell>
-                                    <TableCell>{item.productDescription}</TableCell>
+                                    <TableCell>{item.price}</TableCell>
                                     <TableCell>{item.categoryName}</TableCell>
                                     <TableCell>{item.isActive.toString()}</TableCell>
                                     <TableCell>
@@ -177,7 +186,13 @@ export function Product({ products, UpdateProduct, DeleteProduct,LoadProducts, c
                             }
                         </TableBody>
                     </TblContainer>
-                    <TblPagination />
+                    <Pagination
+                        count={totalItems}
+                        pageSize={10}
+                        fetchMethod={(value) => {
+                            LoadProducts(value)
+                        }}
+                    />
                 </Paper>
                 <Popup
                     title="Product Form"
@@ -226,7 +241,11 @@ function mapStateToProps(state) {
         user: state.userReducer.user,
         cacNumber: state.userReducer.cacNumber,
         products: state.productReducer.products,
-        companyId:state.userReducer.companyId,
+        companyId: state.userReducer.companyId,
+        currentPage: state.utilityReducer.currentPage,
+        itemsPerPage: state.utilityReducer.itemsPerPage,
+        totalItems: state.utilityReducer.totalItems,
+        totalPages: state.utilityReducer.totalPages,
         categories: state.productReducer.categories,
     };
 }

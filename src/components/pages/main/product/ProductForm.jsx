@@ -12,12 +12,10 @@ const returnables = () => ([
 
 const initialFValues = {
     id: 0,
-    categoryId: '',
+    productCategoryId: '',
     productName: '',
-    unit: '',
-    productDescription: '',
-    sku: '',
-    returnable: '',
+    price: '',
+    
 
 }
 
@@ -28,14 +26,10 @@ export default function ProductForm(props) {
 
         if ('productName' in fieldValues)
             temp.productName = fieldValues.productName ? "" : "This field is required."
-        if ('unit' in fieldValues)
-            temp.unit = fieldValues.unit ? "" : "This unit is required."
-        if ('sku' in fieldValues)
-            temp.sku = fieldValues.sku ? "" : "This sku is required."
-        if ('productDescription' in fieldValues)
-            temp.productDescription = fieldValues.productDescription ? "" : "This productDescription is required."
-        if ('categoryId' in fieldValues)
-            temp.categoryId = fieldValues.categoryId !== "" ? "" : "Select a Category"
+        if ('price' in fieldValues)
+            temp.price = fieldValues.price ? "" : "This price is required."
+        if ('productCategoryId' in fieldValues)
+            temp.productCategoryId = fieldValues.productCategoryId !== "" ? "" : "Select a Category"
         setErrors({
             ...temp
         })
@@ -69,7 +63,7 @@ export default function ProductForm(props) {
       
         <Form onSubmit={handleSubmit}>
             <Grid container>
-                <Grid item xs={6}>
+            <Grid item xs={6}>
                     <Controls.Input
                         name="productName"
                         label="Product Name"
@@ -78,48 +72,27 @@ export default function ProductForm(props) {
                         error={errors.productName}
                     />
                     <Controls.Input
-                        label="Product Description"
-                        name="productDescription"
-                        value={values.productDescription || ''}
+                        label="Product Price"
+                        name="price"
+                        value={values.price || ''}
 
                         onChange={handleInputChange}
-                        error={errors.productDescription}
+                        error={errors.price}
                     />
-                    <Controls.Input
-                        label="Unit"
-                        name="unit"
-                        value={values.unit || ''}
-                        onChange={handleInputChange}
-                        error={errors.unit}
-                    />
-                    <Controls.Input
-                        label="SKU"
-                        name="sku"
-                        value={values.sku || ''}
-                        onChange={handleInputChange}
-                        error={errors.sku}
-                    />
+                    
 
                 </Grid>
                 <Grid item xs={6}>
                     <Controls.Select
                         name="categoryId"
                         label="Categories"
-                        value={values.categoryId || ''}
+                        value={values.productCategoryId || ''}
                         onChange={handleInputChange}
                         options={categories}
                         error={errors.categoryId}
                     />
 
-                    <Controls.Select
-                        name="returnable"
-                        label="Returnables"
-                        value={values.returnable || ''}
-                        onChange={handleInputChange}
-                        options={returnables()}
-                        error={errors.returnable}
-                    />
-
+                   
                     <div>
                         <Controls.Button
                             type="submit"

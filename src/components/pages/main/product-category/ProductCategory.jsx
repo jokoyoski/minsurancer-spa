@@ -128,6 +128,7 @@ export function ProductCategory({ categories,
                 <StatComponent />
                 <ToastContainer />
                 <Paper className={classes.pageContent}>
+                    <h2>Product Category</h2>
                     <Toolbar>
                         <Controls.Button
                             text="Add New"

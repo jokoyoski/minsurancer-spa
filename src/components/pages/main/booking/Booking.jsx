@@ -5,6 +5,7 @@ import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornm
 import useTable from "../../../utilities/useTable";
 import { ToastContainer } from 'react-toastify';
 import StatComponent from '../../stat-page/StatComponent';
+import Moment from 'react-moment';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from "react-redux";
 import Controls from "../../../controls/Controls";
@@ -39,6 +40,7 @@ const headCells = [
     { id: 'statusname', label: 'Status Name' },
     { id: 'servicename', label: 'Service Name' },
     { id: 'transactionstatus', label: 'Transaction Status' },
+    { id: 'dte', label: 'Date Created' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
@@ -105,6 +107,7 @@ export function Booking({ bookings, UpdateBooking, LoadBookings, statuses,
                 <StatComponent />
                 <ToastContainer />
                 <Paper className={classes.pageContent}>
+                    <h1>Bookings</h1>
                     <TblContainer>
                         <TblHead />
                         <TableBody>
@@ -115,6 +118,7 @@ export function Booking({ bookings, UpdateBooking, LoadBookings, statuses,
                                     <TableCell>{item.statusName}</TableCell>
                                     <TableCell>{item.serviceName}</TableCell>
                                     <TableCell>{item.transactionReference}</TableCell>
+                                    <TableCell><Moment format="YYYY/MM/DD">{item.datecReated}</Moment></TableCell>
                                     <TableCell>
                                         <Controls.ActionButton
                                             color="primary"
@@ -128,14 +132,14 @@ export function Booking({ bookings, UpdateBooking, LoadBookings, statuses,
                                 )
                             }
                         </TableBody>
-                        <Pagination
+                    </TblContainer>
+                    <Pagination
                         count={totalItems}
                         pageSize={10}
                         fetchMethod={(value) => {
                             LoadBookings(value)
                         }}
                     />
-                    </TblContainer>
                  
                 </Paper>
                 <Popup

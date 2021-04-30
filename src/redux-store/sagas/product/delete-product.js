@@ -11,17 +11,21 @@ function* workerSaga(action) {
     try {
         yield put({ type: "DISPLAY_LOADER" });
         let payload = {};
-        var url = 'delete-product-by-id/' + action.payload;
+        var url = 'api/SetUp/delete-product-by-id/' + action.payload;
         yield request("delete", action.payload, url).then(response => {
             payload = response;
         });
         toast.success(payload)
-        var formatUrl = 'get-products?companyId=' + localStorage.getItem("companyId")
-        yield request("get", action.payload, formatUrl).then(response => {
+        var formatUrl = 'api/SetUp/get-products?id=1' 
+        yield request("get", {}, formatUrl).then(response => {
             payload = response;
         });
-        yield put({ type: "PRODUCT_LIST", payload: payload })
-         formatUrl = 'get-categories-dropdown/'+localStorage.getItem("companyId")
+        yield put({ type: "PRODUCT_LIST", payload: payload.products })
+        yield put({ type: "CURRENT_PAGE", payload: payload.currentPage })
+        yield put({ type: "ITEMS_PER_PAGE", payload: payload.pageSize })
+        yield put({ type: "TOTAL_ITEMS", payload: payload.totalCount })
+        yield put({ type: "TOTAL_PAGES", payload: payload.totalPages })
+        formatUrl = `api/SetUp/get-categories-dropdown`
         yield request("get", action.payload, formatUrl).then(response => {
             payload = response;
         });

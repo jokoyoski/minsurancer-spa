@@ -122,6 +122,7 @@ export function Subscription({ subscriptions, Addsubscription, Loadsubscriptions
                 <div style={{ margin: '10px 0px 0px 80px', width: '95%', }}>
                 </div>
                 <Paper className={classes.pageContent}>
+                    <h2>Subscription</h2>
                     <Toolbar>
                         <Controls.Button
                             text="Add New"

@@ -118,6 +118,7 @@ export function Service({ services, UpdateService, DeleteService, LoadServices, 
                 <div style={{ margin: '10px 0px 0px 80px', width: '95%', }}>
                 </div>
                 <Paper className={classes.pageContent}>
+                    <h2>Service</h2>
                     <Toolbar>
                         <Controls.Button
                             text="Add New"

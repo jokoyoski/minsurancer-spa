@@ -82,7 +82,6 @@ export function Locations({ locations, AddLocation, LoadLocations,UpdateLocation
         if (Location.id === 0)
             AddLocation(Location)
         else
-            console.log(Location)
         UpdateLocation(Location)
         resetForm()
         setAddOpenPopup(false)
@@ -121,6 +120,7 @@ export function Locations({ locations, AddLocation, LoadLocations,UpdateLocation
                 <div style={{ margin: '10px 0px 0px 80px', width: '95%', }}>
                 </div>
                 <Paper className={classes.pageContent}>
+                    <h2>Location</h2>
                     <Toolbar>
                         <Controls.Button
                             text="Add New"
@@ -139,16 +139,15 @@ export function Locations({ locations, AddLocation, LoadLocations,UpdateLocation
                                 (<TableRow key={item.id}>
                                     <TableCell>{item.name}</TableCell>
                                     <TableCell>{item.isActive.toString()}</TableCell>
-                                    <TableCell></TableCell>
-                                   
-                                    <TableCell>
-                                        <Controls.ActionButton
+                                    <TableCell><Controls.ActionButton
                                             color="primary"
                                             onClick={() => {
                                                 openInPopup(item)
                                             }}>
                                             <EditOutlinedIcon fontSize="small" />
-                                        </Controls.ActionButton>
+                                        </Controls.ActionButton></TableCell>
+                                   
+                                    <TableCell>
                                         <Controls.ActionButton
                                             color="secondary"
                                             onClick={() => {

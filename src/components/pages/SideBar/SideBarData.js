@@ -32,6 +32,11 @@ export const SideBarData = [
                 icon: <i className="fas fa-cart-plus"></i>,
             },
             {
+                title: 'Edit Profile',
+                path: '/main/user',
+                icon: <i className="fas fa-user"></i>,
+            },
+            {
                 title: 'Bookings',
                 path: '/main/bookings',
                 icon: <i className="fas fa-users"></i>,

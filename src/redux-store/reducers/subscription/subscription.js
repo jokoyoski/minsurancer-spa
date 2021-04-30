@@ -7,8 +7,6 @@ const initialState = {
 
 
 function SubscriptionReducer(state = initialState, action) {
-   console.log(5656565656565)
-     console.log(action.payload)
     if (action.type === "SUBSCRIPTIONS_LIST") {
         var subscriptionDetails = {
             ...state,

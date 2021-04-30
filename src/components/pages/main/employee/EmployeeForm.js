@@ -1,8 +1,9 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from "../../../controls/Controls";
 import { useForm, Form } from '../../../controls/useForm';
-import * as employeeService from "../../../../services/employeeService";
+import { request } from '../../../../api/Service';
+import { store } from '../../../../redux-store/store';
 
 
 const genderItems = [
@@ -16,7 +17,7 @@ const initialFValues = {
     firttName: '',
     lastName: '',
     phonenNmber: '',
-    email:'',
+    email: '',
     city: '',
     roleId: '',
     gender: 'male',
@@ -26,9 +27,9 @@ const initialFValues = {
     isPermanent: false,
 }
 
-export default function EmployeeForm(props) {
-    const { addOrEdit, recordForEdit } = props
 
+
+export default function EmployeeForm(props) {
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         console.log(fieldValues)
@@ -40,10 +41,6 @@ export default function EmployeeForm(props) {
             temp.email = fieldValues.email ? "" : "This email is required."
         if ('phoneNumber' in fieldValues)
             temp.phoneNumber = fieldValues.phoneNumber.length > 9 ? "" : "Minimum 10 numbers required."
-        if ('roleId' in fieldValues)
-            temp.roleId = fieldValues.roleId !== "" ? "" : "Select a role"
-        if ('departmentId' in fieldValues)
-            temp.departmentId = fieldValues.departmentId.length !== 0 ? "" : "This field is required."
         console.log(temp)
         setErrors({
             ...temp
@@ -52,6 +49,20 @@ export default function EmployeeForm(props) {
         if (fieldValues === values)
             return Object.values(temp).every(x => x === "")
     }
+
+
+    useEffect(() => {
+        store.dispatch({ type: "DISPLAY_LOADER" })
+        request('get', {}, `api/Authentication/user/${localStorage.getItem("email")}`).then(data => {
+            setValues({
+                ...data
+            })
+            store.dispatch({ type: "DISPLAY_LOADER" })
+        }
+        )
+
+    }, [])
+
 
     const {
         values,
@@ -65,77 +76,70 @@ export default function EmployeeForm(props) {
     const handleSubmit = e => {
         e.preventDefault()
         if (validate()) {
-            addOrEdit(values, resetForm);
+            store.dispatch({ type: "DISPLAY_LOADER" })
+            request('post', values, `api/Authentication/update-user`).then(data => {
+                store.dispatch({ type: "DISPLAY_LOADER" })
+            }
+            )
         }
     }
 
-    useEffect(() => {
-        if (recordForEdit !== null)
-            setValues({
-                ...recordForEdit
-            })
-    }, [recordForEdit])
+
 
     return (
-        <Form onSubmit={handleSubmit}>
-            <Grid container>
-                <Grid item xs={6}>
-                    <Controls.Input
-                        name="firstName"
-                        label="First Name"
-                        value={values.firstName || ''}
-                        onChange={handleInputChange}
-                        error={errors.firstName}
-                    />
-                    <Controls.Input
-                        label="Last Name"
-                        name="lastName"
-                        value={values.lastName || ''}
-
-                        onChange={handleInputChange}
-                        error={errors.lastName}
-                    />
-                    <Controls.Input
-                        label="Email"
-                        name="Email"
-                        value={values.email || ''}
-                        readOnly={true}
-                        onChange={handleInputChange}
-                        error={errors.email}
-                    />
-                    <Controls.Input
-                        label="Phone Number"
-                        name="phoneNumber"
-
-                        value={values.phoneNumber || ''}
-                        onChange={handleInputChange}
-                        error={errors.phoneNumber}
-                    />
-
-                </Grid>
-                <Grid item xs={6}>
-                    <Controls.Select
-                        name="roleId"
-                        label="Roles"
-                        value={values.roleId || ''}
-                        onChange={handleInputChange}
-                        options={props.roles}
-                        error={errors.roleId}
-                    />
-                    <Controls.DatePicker
-                        name="hireDate"
-                        label="Hire Date"
-                        value={values.dateCreated}
-                        onChange={handleInputChange}
-                    />
-
-                    <div>
+        <div style={{ marginTop: '40px', width: '950' }}>
+            <h3 style={{textAlign:'center'}}>Update Profile</h3>
+            <Form onSubmit={handleSubmit}>
+                <div style={{ display: 'flex', justifyContent: 'space-around' }}>
+                    <div style={{ width: '45%' }}>
+                    <input type="hidden"  name="id" value={values.id}/>
+                        <Controls.Input
+                            name="firstName"
+                            label="First Name"
+                            value={values.firstName || ''}
+                            style={{ width: '100%' }}
+                            onChange={handleInputChange}
+                            error={errors.firstName}
+                        />
+                        <Controls.Input
+                            label="Last Name"
+                            name="lastName"
+                            value={values.lastName || ''}
+                            style={{ width: '100%' }}
+                            onChange={handleInputChange}
+                            error={errors.lastName}
+                        />
+                       
                         <Controls.Button
                             type="submit"
                             text="Submit" />
+
                     </div>
-                </Grid>
-            </Grid>
-        </Form>
+                    <div style={{ width: '45%' }}>
+                        <Controls.Input
+                            label="Email"
+                            name="Email"
+                            value={values.email || ''}
+                            readOnly={true}
+                            style={{ width: '100%' }}
+                            onChange={handleInputChange}
+                            error={errors.email}
+                        />
+                        <Controls.Input
+                            label="Phone Number"
+                            name="phoneNumber"
+                            style={{ width: '100%' }}
+                            value={values.phoneNumber || ''}
+                            onChange={handleInputChange}
+                            error={errors.phoneNumber}
+                        />
+
+                    </div>
+
+                </div>
+
+            </Form>
+        </div>
+
     )
 }

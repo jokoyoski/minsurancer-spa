@@ -1,5 +1,5 @@
 import { takeEvery, put } from "redux-saga/effects";
-import { request } from '../../../api/Service';
+import { request,request2 } from '../../../api/Service';
 import { getErrorMessage } from '../../../components/utils/errorHandler';
 import { toast } from 'react-toastify';
 import history from '../../../router/browserrouter';
@@ -14,16 +14,20 @@ function* workerSaga(action) {
         yield put({ type: "DISPLAY_LOADER" });
         let payload = {}
        // var url='update-product?CompanyId='+action.payload.companyId+'&CategoryId='+action.payload.categoryId+'&CreatedBy=1'+'&ImageId=hhhh&ProductName='+action.payload.productName+'&Unit='+action.payload.unit+'&ProductDescription='+action.payload.productDescription+'&SKU='+action.payload.sku+'&Returnable='+action.payload.returnable+'&id='+action.payload.id;
-        var url="update-product"
-        yield request("post", action.payload, url).then(response => {
+        var url="api/SetUp/update-product"
+        yield request2("post", action.payload, url).then(response => {
             payload = response;
         });
-        var formatUrl = 'get-products?companyId=' + action.payload.companyId
-        yield request("get", action.payload, formatUrl).then(response => {
+        var formatUrl = 'api/SetUp/get-products?id=1' 
+        yield request("get", {}, formatUrl).then(response => {
             payload = response;
         });
-        yield put({ type: "PRODUCT_LIST", payload: payload })
-         formatUrl = 'get-categories-dropdown/'+action.payload.companyId
+        yield put({ type: "PRODUCT_LIST", payload: payload.products })
+        yield put({ type: "CURRENT_PAGE", payload: payload.currentPage })
+        yield put({ type: "ITEMS_PER_PAGE", payload: payload.pageSize })
+        yield put({ type: "TOTAL_ITEMS", payload: payload.totalCount })
+        yield put({ type: "TOTAL_PAGES", payload: payload.totalPages })
+        formatUrl = `api/SetUp/get-categories-dropdown`
         yield request("get", action.payload, formatUrl).then(response => {
             payload = response;
         });

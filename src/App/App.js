@@ -13,7 +13,7 @@ import Service from '../components/pages/main/service/Service'
 import ProtectedRoute from '../router/ProtectedRoute';
 import LoadingOverlay from 'react-loading-overlay';
 import MainProtectedRoute from '../router/MainProtectedRoute';
-import Employees from '../components/pages/main/employee/Employees';
+import EmployeeForm from '../components/pages/main/employee/EmployeeForm';
 import Product from '../components/pages/main/product/Product';
 import Location from '../components/pages/main/location/Location';
 import  Order  from '../components/pages/main/order/Order';
@@ -90,7 +90,7 @@ class App extends React.Component {
               active={this.props.spinner}
               spinner
             >
-              <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/dashboard' component={Employees} />
+              <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/user' component={EmployeeForm} />
               <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/product-category' component={ProductCategory} />
               <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/product' component={Product} />
               <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/locations' component={Location} />

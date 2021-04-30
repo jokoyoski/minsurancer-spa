@@ -19,15 +19,10 @@ function HeaderComponent(props) {
             <span className='title'></span>
             
             <Row vertical="center">
-            <i className="fas fa-user-tie"></i>
-            <nav style={{marginRight:'2rem'}} role="navigation">
-                <ul>
-                    <li><a href="#">{props.firstname}</a>
-                        <ul className="dropdown">
-                            <li><a onClick={()=>logout()}>Log out</a></li>
-                        </ul>
-                    </li>
-                </ul>
+            <i style={{margin:'2rem'}} className="fas fa-user-tie"></i>
+            {props.firstname}
+            <nav style={{margin:'2rem'}} role="navigation">
+                <button style={{cursor:'pointer',color:'white',height:'30px',width:'60px',backgroundColor:'black',outlineColor:'black',borderRadius:'8px'}} onClick={()=>logout()}>Logout</button>
             </nav>
             <div className='seperator'></div>
             <div className='seperator'></div>
