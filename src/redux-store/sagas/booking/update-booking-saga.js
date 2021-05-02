@@ -18,7 +18,7 @@ function* workerSaga(action) {
         yield request("put",{},url).then(response => {
             payload = response;
         });
-        var url = `api/SetUp/bookings/1`;
+        var url = `bookings/1`;
         yield request("get", action.payload, url).then(response => {
             payload = response;
         });

@@ -17,7 +17,7 @@ function* workerSaga(action) {
         });
         console.log(payload)
         yield put({ type: "SUBSCRIPTION_DROPDOWN_LIST", payload: payload })
-        var formatUrl = 'api/SetUp/get-services/'+action.payload;
+        var formatUrl = 'get-services/'+action.payload;
         yield request("get", {}, formatUrl).then(response => {
             payload = response;
         });
