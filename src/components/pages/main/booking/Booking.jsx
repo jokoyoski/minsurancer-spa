@@ -101,7 +101,7 @@ export function Booking({ bookings, UpdateBooking, LoadBookings, statuses,
 
     return (
 
-        <div style={{ height: '700px' }}>
+        <div style={{ overflowX: 'scroll', height: '700px', paddingBottom: '200px' }}>
             <Column flexGrow={1}>
                 <StatComponent />
                 <ToastContainer />
