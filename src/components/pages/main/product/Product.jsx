@@ -94,6 +94,7 @@ export function Product({ products, UpdateProduct, DeleteProduct, LoadProducts, 
         resetForm()
         // setRecordForEdit(null)
         setOpenPopup(false)
+        setAddOpenPopup(false)
 
     }
 
@@ -106,6 +107,7 @@ export function Product({ products, UpdateProduct, DeleteProduct, LoadProducts, 
         resetForm()
         setRecordForEdit(null)
         setOpenPopup(false)
+        setAddOpenPopup(false)
     }
 
     const openInPopup = item => {
@@ -127,18 +129,10 @@ export function Product({ products, UpdateProduct, DeleteProduct, LoadProducts, 
                 <StatComponent />
                 <ToastContainer />
                 <div style={{ margin: '10px 0px 0px 80px', width: '95%', }}>
-                    <Controls.Input
-                        label="Search Products"
-                        className={classes.searchInput}
-                        InputProps={{
-                            startAdornment: (<InputAdornment position="start">
-                                <Search />
-                            </InputAdornment>)
-                        }}
-                        onChange={handleSearch}
-                    />
+                   
                 </div>
                 <Paper className={classes.pageContent}>
+                <h2>Product</h2>
                     <Toolbar>
                         <Controls.Button
                             text="Add New"

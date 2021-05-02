@@ -11,12 +11,12 @@ function* workerSaga(action) {
     try {
         yield put({ type: "DISPLAY_LOADER" });
         let payload = {};
-        var url = 'api/SetUp/delete-subscription-by-id/' + action.payload;
+        var url = 'delete-subscription-by-id/' + action.payload;
         yield request("delete", action.payload, url).then(response => {
             payload = response;
         });
         toast.success(payload)
-        var formatUrl = `api/SetUp/get-subscriptions/1`
+        var formatUrl = `get-subscriptions/1`
         yield request("get", {}, formatUrl).then(response => {
             payload = response;
         });

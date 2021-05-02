@@ -12,7 +12,7 @@ function* workerSaga(action) {
     try {
         yield put({ type: "DISPLAY_LOADER", payload: payload })
         var payload = {}
-        var formatUrl = `api/SetUp/get-subscriptions/${action.payload}`
+        var formatUrl = `get-subscriptions/${action.payload}`
         yield request("get", {}, formatUrl).then(response => {
             payload = response;
         });

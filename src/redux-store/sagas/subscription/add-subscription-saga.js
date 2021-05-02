@@ -15,7 +15,7 @@ function* workerSaga(action) {
             payload = response;
         });
         toast.success(payload)
-        var formatUrl = `api/SetUp/get-subscriptions/1`
+        var formatUrl = `get-subscriptions/1`
         yield request("get", {}, formatUrl).then(response => {
             payload = response;
         });

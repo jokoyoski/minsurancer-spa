@@ -17,17 +17,17 @@ function* workerSaga(action) {
             payload = response;
         });
         toast.success(payload)
-        const formatUrl = `api/SetUp/get-product-category/${1}`
+        const formatUrl = `get-product-category/${1}`
         yield request("get", payload, formatUrl).then(response => {
             payload = response;
         });
         console.log('about to displatch product category list')
         yield put({ type: "PRODUCT_CATEGORY_LIST", payload: payload.productCategories })
-        console.log('about to displatch display loader')
         yield put({ type: "DISPLAY_LOADER", payload: payload })
         yield put({ type: "CURRENT_PAGE", payload: payload.currentPage })
         yield put({ type: "ITEMS_PER_PAGE", payload: payload.pageSize })
         yield put({ type: "TOTAL_ITEMS", payload: payload.totalCount })
+        localStorage.setItem("totalProductCategory",payload.totalCount)
         yield put({ type: "TOTAL_PAGES", payload: payload.totalPages })
     } catch (e) {
         yield put({ type: "LOADING_BUTTON_SPINNER" });

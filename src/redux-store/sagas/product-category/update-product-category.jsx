@@ -17,7 +17,7 @@ function* workerSaga(action) {
         yield request("post", action.payload, url).then(response => {
             payload = response;
         });
-        const formatUrl = `api/SetUp/get-product-category/${1}`
+        const formatUrl = `get-product-category/${1}`
         yield request("get", payload, formatUrl).then(response => {
             payload = response;
         });
