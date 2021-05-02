@@ -214,7 +214,6 @@ export function Service({ services, UpdateService, DeleteService, LoadServices, 
 
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         buttonloader: state.utilityReducer.buttonloader,
         services: state.serviceReducer.services,

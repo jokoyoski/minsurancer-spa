@@ -19,7 +19,6 @@ import Notification from "../../../utilities/Notification";
 import ConfirmDialog from "../../../utilities/ConfirmDialog";
 import BookingForm from './BookingForm';
 
-
 const useStyles = makeStyles(theme => ({
     pageContent: {
         margin: theme.spacing(5),

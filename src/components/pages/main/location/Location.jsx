@@ -216,7 +216,6 @@ export function Locations({ locations, AddLocation, LoadLocations,UpdateLocation
 
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         currentPage: state.utilityReducer.currentPage,
         itemsPerPage: state.utilityReducer.itemsPerPage,

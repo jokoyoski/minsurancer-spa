@@ -1,7 +1,7 @@
 .menu-bar {
     color: black;
     &:hover {
-        background:rgba(221, 226, 255, 0.08);
+        background: rgba(221, 226, 255, 0.08);
         cursor: pointer;
         color: white;
         border-left: 4px solid white;
@@ -45,7 +45,6 @@
     left: 0px;
 }
 
-
 .nav-link {
     margin-left: 2rem;
     font-size: 2rem;
@@ -54,6 +53,14 @@
     display: flex;
     justify-content: flex-start;
     align-items: center;
+}
+
+.active-yo {
+    background: rgba(221, 226, 255, 0.08);
+    border-left: 5px solid white;
+    text-decoration: none;
+    cursor: pointer;
+    color: white;
 }
 
 .side-bar-link {
@@ -77,7 +84,3 @@
 .side-bar-label {
     margin-left: 16px;
 }
-
-
-
-

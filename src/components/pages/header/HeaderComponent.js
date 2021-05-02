@@ -6,11 +6,11 @@ import IconBellNew from '../../../assets/icons/icon-bell-new';
 import { connect } from "react-redux";
 import history from '../../../router/browserrouter';
 import './header.styles.scss';
+import {Link} from "react-router-dom";
 
 function logout() {
     localStorage.clear();
-    history.push("/user/login")
-
+  
 }
 function HeaderComponent(props) {
     const { icon, title, ...otherProps } = props;
@@ -22,7 +22,11 @@ function HeaderComponent(props) {
             <i style={{margin:'2rem'}} className="fas fa-user-tie"></i>
             {props.firstname}
             <nav style={{margin:'2rem'}} role="navigation">
-                <button style={{cursor:'pointer',color:'white',height:'30px',width:'60px',backgroundColor:'black',outlineColor:'black',borderRadius:'8px'}} onClick={()=>logout()}>Logout</button>
+            <Link  onClick={()=>logout()}  style={{cursor:'pointer',color:'white',height:'30px',
+            width:'60px',backgroundColor:'black',outlineColor:'black',
+            borderRadius:'8px',display:'inline-block',textAlign:'center',paddingTop:'3px'}}   to={'/user/login'}>
+             Logout
+            </Link>
             </nav>
             <div className='seperator'></div>
             <div className='seperator'></div>

@@ -1,8 +1,12 @@
-import {Link} from "react-router-dom";
-import React, {useState, useRef, useEffect} from "react";
+import { Link } from "react-router-dom";
+import React, { useState, useRef, useEffect } from "react";
 import "../SideBar/side-menu.styles.scss";
+import history from '../../../router/browserrouter';
+import { withRouter } from 'react-router-dom';
 export const SubMenu = (props) => {
+  console.log(props)
   const [buttonIdsArray, setIds] = useState([]);
+  const [path, setPath] = useState('')
   const isMounted = useRef(false);
   for (var i = 0; i < props.length; i++) {
     setIds(subNav.id);
@@ -23,11 +27,16 @@ export const SubMenu = (props) => {
       el.style.maxHeight = `${content.current.scrollHeight}px`;
     }
   };
+
+
   const content = useRef(null);
-  const {title, subNav, icon, id} = props;
+  const { title, subNav, icon, id } = props;
+
   useEffect(() => {
     if (+localStorage.getItem("current-nav") === id) {
       showSubNav(id);
+
+
     }
   }, []);
   return (
@@ -48,8 +57,8 @@ export const SubMenu = (props) => {
           localStorage.setItem("current-nav", id);
         }}
       >
-        <span style={{color:'rgb(164, 166, 179)'}}>{icon}</span>
-        <span style={{display: "inline-block", marginLeft: "3px",color:'rgb(164, 166, 179)'}}>
+        <span style={{ color: 'rgb(164, 166, 179)' }}>{icon}</span>
+        <span style={{ display: "inline-block", marginLeft: "3px", color: 'rgb(164, 166, 179)' }}>
           {title}
         </span>
       </div>
@@ -64,7 +73,7 @@ export const SubMenu = (props) => {
       >
         {subNav.map((item, index) => {
           return (
-            <Link  className="side-bar-link" to={item.path} key={item.title}>
+            <Link  className={localStorage.getItem("currentPath") === item.path ? 'side-bar-link active-yo' : 'side-bar-link'} to={item.path} key={item.title}>
               <span>{item.icon}</span>
               <span className="side-bar-label">{item.title}</span>
             </Link>
@@ -74,4 +83,4 @@ export const SubMenu = (props) => {
     </div>
   );
 };
-export default SubMenu;
+export default withRouter(SubMenu);
