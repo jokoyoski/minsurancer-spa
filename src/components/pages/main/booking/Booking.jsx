@@ -5,6 +5,7 @@ import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornm
 import useTable from "../../../utilities/useTable";
 import { ToastContainer } from 'react-toastify';
 import StatComponent from '../../stat-page/StatComponent';
+import Moment from 'react-moment';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from "react-redux";
 import Controls from "../../../controls/Controls";
@@ -17,7 +18,6 @@ import CloseIcon from '@material-ui/icons/Close';
 import Notification from "../../../utilities/Notification";
 import ConfirmDialog from "../../../utilities/ConfirmDialog";
 import BookingForm from './BookingForm';
-
 
 const useStyles = makeStyles(theme => ({
     pageContent: {
@@ -39,6 +39,7 @@ const headCells = [
     { id: 'statusname', label: 'Status Name' },
     { id: 'servicename', label: 'Service Name' },
     { id: 'transactionstatus', label: 'Transaction Status' },
+    { id: 'dte', label: 'Date Created' },
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
@@ -66,18 +67,18 @@ export function Booking({ bookings, UpdateBooking, LoadBookings, statuses,
     }, [page])
 
 
-   /* const handleSearch = e => {
-        let target = e.target;
-        setFilterFn({
-            fn: items => {
-
-                if (target.value === "")
-                    return items;
-                else
-                    return items.filter(x => x.ProductName.toLowerCase().includes(target.value))
-            }
-        })
-    }*/
+    /* const handleSearch = e => {
+         let target = e.target;
+         setFilterFn({
+             fn: items => {
+ 
+                 if (target.value === "")
+                     return items;
+                 else
+                     return items.filter(x => x.ProductName.toLowerCase().includes(target.value))
+             }
+         })
+     }*/
 
 
 
@@ -105,6 +106,7 @@ export function Booking({ bookings, UpdateBooking, LoadBookings, statuses,
                 <StatComponent />
                 <ToastContainer />
                 <Paper className={classes.pageContent}>
+                    <h1>Bookings</h1>
                     <TblContainer>
                         <TblHead />
                         <TableBody>
@@ -115,6 +117,7 @@ export function Booking({ bookings, UpdateBooking, LoadBookings, statuses,
                                     <TableCell>{item.statusName}</TableCell>
                                     <TableCell>{item.serviceName}</TableCell>
                                     <TableCell>{item.transactionReference}</TableCell>
+                                    <TableCell><Moment format="YYYY/MM/DD">{item.datecReated}</Moment></TableCell>
                                     <TableCell>
                                         <Controls.ActionButton
                                             color="primary"
@@ -128,15 +131,15 @@ export function Booking({ bookings, UpdateBooking, LoadBookings, statuses,
                                 )
                             }
                         </TableBody>
-                        <Pagination
+                    </TblContainer>
+                    <Pagination
                         count={totalItems}
                         pageSize={10}
                         fetchMethod={(value) => {
                             LoadBookings(value)
                         }}
                     />
-                    </TblContainer>
-                 
+
                 </Paper>
                 <Popup
                     title="Booking Form"

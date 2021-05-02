@@ -11,16 +11,22 @@ function* workerSaga(action) {
     try {
         yield put({ type: "DISPLAY_LOADER", payload: payload })
         var payload = {}
-        formatUrl = 'get-categories-dropdown/'+ action.payload
-        yield request("get", action.payload, formatUrl).then(response => {
+        formatUrl = `api/SetUp/get-categories-dropdown`
+        yield request("get", {}, formatUrl).then(response => {
             payload = response;
         });
         yield put({ type: "PRODUCT_CATEGORY_DROPDOWN_LIST", payload: payload })
-        var formatUrl = 'get-products?companyId=' + action.payload
-        yield request("get", payload, formatUrl).then(response => {
+        var formatUrl = `api/SetUp/get-products?id=${action.payload}`
+        yield request("get", {}, formatUrl).then(response => {
             payload = response;
         });
-        yield put({ type: "PRODUCT_LIST", payload: payload })
+        console.log(payload)
+        yield put({ type: "PRODUCT_LIST", payload: payload.products })
+        yield put({ type: "LOCATIONS_LIST", payload: payload.locations})
+        yield put({ type: "CURRENT_PAGE", payload: payload.currentPage })
+        yield put({ type: "ITEMS_PER_PAGE", payload: payload.pageSize })
+        yield put({ type: "TOTAL_ITEMS", payload: payload.totalCount })
+        yield put({ type: "TOTAL_PAGES", payload: payload.totalPages })
         yield put({ type: "DISPLAY_LOADER", payload: payload })
 
     } catch (e) {

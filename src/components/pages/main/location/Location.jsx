@@ -223,15 +223,15 @@ export function Locations({
 }
 
 function mapStateToProps(state) {
-  console.log(state);
-  return {
-    currentPage: state.utilityReducer.currentPage,
-    itemsPerPage: state.utilityReducer.itemsPerPage,
-    totalItems: state.utilityReducer.totalItems,
-    totalPages: state.utilityReducer.totalPages,
-    buttonloader: state.utilityReducer.buttonloader,
-    locations: state.locationReducer.locations
-  };
+    return {
+        currentPage: state.utilityReducer.currentPage,
+        itemsPerPage: state.utilityReducer.itemsPerPage,
+        totalItems: state.utilityReducer.totalItems,
+        totalPages: state.utilityReducer.totalPages,
+        buttonloader: state.utilityReducer.buttonloader,
+        locations: state.locationReducer.locations,
+
+    };
 }
 const mapDispatchToProps = dispatch => ({
   UpdateLocation(payload) {

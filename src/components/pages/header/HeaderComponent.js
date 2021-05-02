@@ -6,11 +6,11 @@ import IconBellNew from '../../../assets/icons/icon-bell-new';
 import { connect } from "react-redux";
 import history from '../../../router/browserrouter';
 import './header.styles.scss';
+import {Link} from "react-router-dom";
 
 function logout() {
     localStorage.clear();
-    history.push("/user/login")
-
+  
 }
 function HeaderComponent(props) {
     const { icon, title, ...otherProps } = props;
@@ -19,15 +19,14 @@ function HeaderComponent(props) {
             <span className='title'></span>
             
             <Row vertical="center">
-            <i className="fas fa-user-tie"></i>
-            <nav style={{marginRight:'2rem'}} role="navigation">
-                <ul>
-                    <li><a href="#">{props.firstname}</a>
-                        <ul className="dropdown">
-                            <li><a onClick={()=>logout()}>Log out</a></li>
-                        </ul>
-                    </li>
-                </ul>
+            <i style={{margin:'2rem'}} className="fas fa-user-tie"></i>
+            {props.firstname}
+            <nav style={{margin:'2rem'}} role="navigation">
+            <Link  onClick={()=>logout()}  style={{cursor:'pointer',color:'white',height:'30px',
+            width:'60px',backgroundColor:'black',outlineColor:'black',
+            borderRadius:'8px',display:'inline-block',textAlign:'center',paddingTop:'3px'}}   to={'/user/login'}>
+             Logout
+            </Link>
             </nav>
             <div className='seperator'></div>
             <div className='seperator'></div>

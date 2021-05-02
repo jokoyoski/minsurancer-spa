@@ -11,7 +11,7 @@ function* workerSaga(action) {
     try {
         yield put({ type: "DISPLAY_LOADER", payload: payload })
         var payload = {}
-        const formatUrl = `api/Order/orders/${action.payload}`
+        const formatUrl = `api/Order/orders?pageNumber=${action.payload}`
         yield request("get", payload, formatUrl).then(response => {
             console.log(response)
             payload = response;

@@ -15,11 +15,13 @@ import { ToastContainer } from 'react-toastify';
 import StatComponent from '../../stat-page/StatComponent';
 import Pagination from '../../../utilities/Pagination';
 import 'react-toastify/dist/ReactToastify.css';
-import { connect } from 'react-redux';
-import Popup from '../../../utilities/Popup';
+import Moment from 'react-moment';
+import { connect } from "react-redux";
+import Popup from "../../../utilities/Popup";
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import Notification from '../../../utilities/Notification';
-import ConfirmDialog from '../../../utilities/ConfirmDialog';
+import {OrderForm} from './Orderform';
+import Notification from "../../../utilities/Notification";
+import ConfirmDialog from "../../../utilities/ConfirmDialog";
 
 const useStyles = makeStyles(theme => ({
   pageContent: {

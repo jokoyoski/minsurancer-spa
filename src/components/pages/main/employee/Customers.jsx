@@ -1,7 +1,7 @@
 
   
 import React, { useState, useEffect } from 'react'
-import EmployeeForm from "./EmployeeForm";
+import {CustomerDetailForm}  from "./CustomerDetailForm";
 import { Column, Row } from 'simple-flexbox';
 import { Paper, makeStyles, TableBody, TableRow, TableCell, Toolbar, InputAdornment } from '@material-ui/core';
 import './employee.styles.scss';
@@ -45,7 +45,7 @@ const headCells = [
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
-export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , currentPage, itemsPerPage, totalItems, totalPages}) {
+export function Customers({ users, UpdateUser, LoadUsers, cacNumber, AddUser , currentPage, itemsPerPage, totalItems, totalPages}) {
 
 
     const classes = useStyles();
@@ -56,6 +56,7 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , c
     const [userLocationOpenPopup, setuserLocationOpenPopup] = useState(false)
     const [notify, setNotify] = useState({ isOpen: false, message: '', type: '' })
     const [confirmDialog, setConfirmDialog] = useState({ isOpen: false, title: '', subTitle: '' })
+    var searchTerm=""
     const {
         TblContainer,
         TblHead,
@@ -64,9 +65,10 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , c
     } = useTable([], headCells, filterFn);
 
     useEffect(() => {
+      
       var data={
         pageNumber:1,
-        userType:'Admin',
+        userType:'Customer',
         searchTerm:''
       }
         LoadUsers(data)
@@ -77,15 +79,13 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , c
 
     const handleSearch = e => {
         let target = e.target;
-        setFilterFn({
-            fn: items => {
-
-                if (target.value === "")
-                    return items;
-                else
-                    return items.filter(x => x.firstName.toLowerCase().includes(target.value))
-            }
-        })
+        searchTerm=target.value
+        var data={
+            pageNumber:1,
+            userType:'Customer',
+            searchTerm:target.value
+          }
+            LoadUsers(data)
     }
 
     const addOrEdit = (employee, resetForm) => {
@@ -135,7 +135,7 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , c
     }
     return (
 
-        <div style={{ height: '700px' }}>
+        <div style={{  height: '700px' }}>
             <Column flexGrow={1}>
                 <StatComponent />
                 <ToastContainer />
@@ -192,7 +192,7 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , c
                           var data={
                             pageNumber:value,
                             userType:'Admin',
-                            searchTerm:''
+                            searchTerm:searchTerm
                           }
                             LoadUsers(data)
                         }}
@@ -204,7 +204,7 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , c
                     openPopup={openPopup}
                     setOpenPopup={setOpenPopup}
                 >
-                    <EmployeeForm
+                    <CustomerDetailForm
                         recordForEdit={recordForEdit}
                         addOrEdit={addOrEdit}
                          />
@@ -284,4 +284,4 @@ const mapDispatchToProps = (dispatch) => ({
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(Employees);
+)(Customers);

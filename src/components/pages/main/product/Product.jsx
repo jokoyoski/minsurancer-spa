@@ -13,6 +13,7 @@ import {
 import useTable from '../../../utilities/useTable';
 import { ToastContainer } from 'react-toastify';
 import StatComponent from '../../stat-page/StatComponent';
+import Pagination from "../../../utilities/Pagination";
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
 import Controls from '../../../controls/Controls';

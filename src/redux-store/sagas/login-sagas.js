@@ -20,15 +20,12 @@ function* workerSaga(action) {
         var token = payload.token;
         var cacNumber = null;
 
-        yield request("get", action.payload, "get-industries").then(response => {
-            payload = response;
-        })
         yield put({ type: "SET_FIRST_NAME", payload: user.firstName })
         yield put({ type: "SET_ROLES", payload: roles })
         localStorage.setItem("roles", JSON.stringify(roles));
-        console.log(roles)
         yield put({ type: "SET_USER_ID", payload: user.id })
         localStorage.setItem("userId", user.id)
+        localStorage.setItem("email", user.email)
         localStorage.setItem("access_token", JSON.stringify(token))
         yield put({ type: "SET_ACCESS_TOKEN", payload: user.token })
         yield put({ type: "LOADING_BUTTON_SPINNER" });

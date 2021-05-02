@@ -18,7 +18,6 @@ function* workerSaga(action) {
         });
         console.log('about to displatch product category list')
         yield put({ type: "PRODUCT_CATEGORY_LIST", payload: payload.productCategories })
-        console.log('about to displatch display loader')
         yield put({ type: "DISPLAY_LOADER", payload: payload })
         yield put({ type: "CURRENT_PAGE", payload: payload.currentPage })
         yield put({ type: "ITEMS_PER_PAGE", payload: payload.pageSize })
