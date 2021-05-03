@@ -69,7 +69,8 @@ export const SubMenu = props => {
         ref={content}
         style={{
           maxHeight: '0px',
-          overflowX: 'hidden'
+          overflowX: 'hidden',
+          transition:'max-height 2s'
         }}>
         {subNav.map((item, index) => {
           return (
