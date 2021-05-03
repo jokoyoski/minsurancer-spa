@@ -80,6 +80,7 @@ export const SubMenu = props => {
                   ? 'side-bar-link active-yo'
                   : 'side-bar-link'
               }
+              onClick={() => localStorage.setItem('currentPath', item.path)}
               to={item.path}
               key={item.title}>
               <span>{item.icon}</span>
