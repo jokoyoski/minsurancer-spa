@@ -25,6 +25,7 @@ function* workerSaga(action) {
     yield put({ type: "CURRENT_PAGE", payload: payload.currentPage })
     yield put({ type: "ITEMS_PER_PAGE", payload: payload.pageSize })
     yield put({ type: "TOTAL_ITEMS", payload: payload.totalCount })
+    localStorage.setItem("totalProduct",payload.totalCount)
     yield put({ type: "TOTAL_PAGES", payload: payload.totalPages })
     formatUrl = `api/SetUp/get-categories-dropdown`
     yield request("get", action.payload, formatUrl).then(response => {

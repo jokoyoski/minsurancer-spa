@@ -16,7 +16,7 @@ function* workerSaga(action) {
             payload = response;
         });
         toast.success(payload)
-        const formatUrl = `api/SetUp/get-product-category/${1}`
+        const formatUrl = `get-product-category/${1}`
         yield request("get", {}, formatUrl).then(response => {
             payload = response;
         });

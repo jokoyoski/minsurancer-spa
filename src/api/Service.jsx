@@ -2,8 +2,8 @@ import axios from 'axios';
 
 
 
-const baseUrl = "https://localhost:5001/"
-//const baseUrl="http://nanoreward-001-site2.etempurl.com/"
+//const baseUrl = "https://localhost:5001/"
+const baseUrl="http://nanoreward-001-site2.etempurl.com/"
 
 
 export function request(method, body, url) {

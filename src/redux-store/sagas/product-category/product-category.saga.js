@@ -12,11 +12,10 @@ function* workerSaga(action) {
         yield put({ type: "DISPLAY_LOADER", payload: payload })
         var payload = {}
 
-        const formatUrl = `api/SetUp/get-product-category/${action.payload}`
+        const formatUrl = `get-product-category/${action.payload}`
         yield request("get", payload, formatUrl).then(response => {
             payload = response;
         });
-        console.log('about to displatch product category list')
         yield put({ type: "PRODUCT_CATEGORY_LIST", payload: payload.productCategories })
         yield put({ type: "DISPLAY_LOADER", payload: payload })
         yield put({ type: "CURRENT_PAGE", payload: payload.currentPage })

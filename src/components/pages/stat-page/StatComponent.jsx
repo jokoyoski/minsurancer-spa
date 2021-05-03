@@ -19,20 +19,20 @@ export const StatComponent = ({firstName}) => {
             </div>
             <div className='stat-area'>
                 <div className='stat-box'>
-                    <p style={{fontSize:'0.7rem',color:'gray',fontFamily:'Roboto'}}>TOTAL NO OF USERS</p>
-                    <p style={{fontWeight:'800'}}>30</p>
+                    <p style={{fontSize:'0.7rem',color:'gray',fontFamily:'Roboto'}}>TOTAL NO OF CUSTOMER</p>
+                    <p style={{fontWeight:'800'}}>{localStorage.getItem("totalUser")}</p>
                 </div>
                 <div className='stat-box'>
                     <p style={{fontSize:'0.7rem',color:'gray',fontFamily:'Roboto'}}>TOTAL NO OF LOCATIONS</p>
-                    <p style={{fontWeight:'800'}}>30</p>
+                    <p style={{fontWeight:'800'}}>{localStorage.getItem("totalLocation")}</p>
                 </div>
                 <div className='stat-box'>
                     <p style={{fontSize:'0.7rem',color:'gray',fontFamily:'Roboto'}}>TOTAL NO OF PRODUCTS</p>
-                    <p style={{fontWeight:'800'}}>30</p>
+                    <p style={{fontWeight:'800'}}>{localStorage.getItem("totalProduct")}</p>
                 </div>
                 <div className='stat-box'>
                     <p style={{fontSize:'0.7rem',color:'gray',fontFamily:'Roboto'}}>TOTAL  PRODUCT CATEGORY</p>
-                    <p style={{fontWeight:'800'}}>30</p>
+                    <p style={{fontWeight:'800'}}>{localStorage.getItem("totalProductCategory")}</p>
                 </div>
 
             </div>

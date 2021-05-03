@@ -10,7 +10,7 @@ export const CustomerDetailForm = (props) => {
     useEffect(() => {
         store.dispatch({ type: "DISPLAY_LOADER" })
         console.log()
-        request('get', {}, `api/SetUp/vehicle/${recordForEdit.id}`).then(data => {
+        request('get', {}, `vehicle/${recordForEdit.id}`).then(data => {
             vehicles = data;
             console.log(vehicles)
             setVehicle(vehicles)

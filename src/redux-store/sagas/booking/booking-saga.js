@@ -12,7 +12,7 @@ function* workerSaga(action) {
     try {
         yield put({ type: "DISPLAY_LOADER" });
         let payload = {};
-        var url = `api/SetUp/bookings/${action.payload}`;
+        var url = `bookings/${action.payload}`;
         yield request("get", action.payload, url).then(response => {
             payload = response;
         });
@@ -21,8 +21,8 @@ function* workerSaga(action) {
         yield put({ type: "CURRENT_PAGE", payload: payload.currentPage })
         yield put({ type: "ITEMS_PER_PAGE", payload: payload.pageSize })
         yield put({ type: "TOTAL_ITEMS", payload: payload.totalCount })
+        localStorage.setItem("totalBooking",payload.totalCount)
         yield put({ type: "TOTAL_PAGES", payload: payload.totalPages })
-        console.log(payload.totalCount)
         var formatUrl = 'api/SetUp/get-statuses-dropdown' ;
         yield request("get", action.payload, formatUrl).then(response => {
             payload = response;

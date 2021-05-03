@@ -19,7 +19,7 @@ function* workerSaga(action) {
             payload = response;
         });
         toast.success(payload)
-        var formatUrl = 'api/SetUp/get-services/1';
+        var formatUrl = 'get-services/1';
         yield request("get", action.payload, formatUrl).then(response => {
             payload = response;
         });

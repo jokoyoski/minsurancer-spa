@@ -38,6 +38,7 @@ export const LoginPageComponent = ({ LoginUser, triggerLogging, buttonloader }) 
             email: formData.email.value,
             password: formData.passwords.value
         }
+        console.log(userDetails)
         LoginUser(userDetails)
     }
 

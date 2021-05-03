@@ -15,7 +15,7 @@ function* workerSaga(action) {
         yield request("put", action.payload, "api/SetUp/update-subscription").then(response => {
             payload = response;
         });
-        var formatUrl = `api/SetUp/get-subscriptions/1`
+        var formatUrl = `get-subscriptions/1`
         yield request("get", {}, formatUrl).then(response => {
             payload = response;
         });

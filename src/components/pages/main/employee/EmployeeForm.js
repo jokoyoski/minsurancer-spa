@@ -110,10 +110,7 @@ export default function EmployeeForm(props) {
                             error={errors.lastName}
                         />
                        
-                        <Controls.Button
-                            type="submit"
-                            text="Submit" />
-
+                     
                     </div>
                     <div style={{ width: '45%' }}>
                         <Controls.Input

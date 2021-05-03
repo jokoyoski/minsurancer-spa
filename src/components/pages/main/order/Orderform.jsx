@@ -33,8 +33,8 @@ export const OrderForm = (props) => {
                                 return (
                                     <tr key={record.productName}>
                                         <td>{record.productName}</td>
-                                        <td>{record.quantity}</td>
                                         <td>₦{record.amount}</td>
+                                        <td>{record.quantity}</td>
                                     </tr>
                                 )
                             })
