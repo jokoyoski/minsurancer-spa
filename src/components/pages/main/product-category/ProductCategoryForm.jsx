@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Grid, } from '@material-ui/core';
+import React, { useEffect, useState } from 'react'
+import { Grid, Button } from '@material-ui/core';
 import Controls from "../../../controls/Controls";
 import { useForm, Form } from '../../../controls/useForm';
 
@@ -12,6 +12,7 @@ const initialFValues = {
 
 export default function ProductCategoryForm(props) {
     const { addOrEdit, recordForEdit } = props
+    const [file, setFile] = useState(null)
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         console.log(fieldValues)
@@ -35,11 +36,16 @@ export default function ProductCategoryForm(props) {
         resetForm
     } = useForm(initialFValues, true, validate);
 
+    const selectFile = (event) => {
+        setFile(event.target.files[0]);
+    }
+
     const handleSubmit = e => {
         e.preventDefault()
         if (validate()) {
-            console.log(values)
-            addOrEdit(values, resetForm);
+            var data = { ...values, formFile: file }
+            console.log(data)
+            addOrEdit(data, resetForm);
         }
     }
 
@@ -61,7 +67,7 @@ export default function ProductCategoryForm(props) {
                         onChange={handleInputChange}
                         error={errors.name}
                     />
-                   
+
                     <Controls.Input
                         label="Description"
                         name="description"
@@ -69,6 +75,23 @@ export default function ProductCategoryForm(props) {
                         onChange={handleInputChange}
                         error={errors.description}
                     />
+  
+                     <label style={{ marginLeft: '10px' }} htmlFor="btn-upload">
+                        <input
+                            id="btn-upload"
+                            name="btn-upload"
+                            style={{ display: 'none' }}
+                            type="file"
+                            accept="image/*"
+                            onChange={selectFile} />
+                        <Button
+                            className="btn-choose"
+                            variant="outlined"
+                            component="span" >
+                            Choose Image
+                       </Button>
+                    </label>
+                    {values.imageId && <img src={values.imageId} />}
                     <div>
                         <Controls.Button
                             type="submit"

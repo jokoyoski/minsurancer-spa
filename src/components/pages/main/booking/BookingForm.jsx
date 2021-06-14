@@ -17,6 +17,8 @@ const initialFValues = {
     transactionReference: '',
     location:'',
     statusId: 0,
+    email :'',
+    phoneNumber:'',
     dateCreated: new Date(),
 }
 
@@ -91,7 +93,25 @@ export default function BookingForm(props) {
                         readOnly={true}
                         value={values.transactionReference || ''}
                         onChange={handleInputChange}
+
+                        
                       
+                    />
+                      <Controls.Input
+                        label="Email"
+                        name="email"
+                        readOnly={true}
+                        value={values.email || ''}
+                        onChange={handleInputChange}
+                    />
+                      <Controls.Input
+                        label="Phone Number"
+                        name="phoneNumber"
+                        readOnly={true}
+                        value={values.phoneNumber || ''}
+                        onChange={handleInputChange}
+
+                
                     />
                     <Controls.Input
                         label="Additional Info"

@@ -19,7 +19,7 @@ import Moment from 'react-moment';
 import { connect } from "react-redux";
 import Popup from "../../../utilities/Popup";
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
-import {OrderForm} from './Orderform';
+import { OrderForm } from './Orderform';
 import Notification from "../../../utilities/Notification";
 import ConfirmDialog from "../../../utilities/ConfirmDialog";
 
@@ -39,9 +39,9 @@ const useStyles = makeStyles(theme => ({
 
 const headCells = [
   { id: 'transactionReference', label: 'Transaction Referance' },
-  { id: 'additonalIngo', label: 'Addtional Info' },
+  { id: 'additonalIngo', label: 'Email' },
   { id: 'status', label: 'Status' },
-  { id: 'accountNNumber', label: 'Account Number' },
+  { id: 'accountNNumber', label: 'Phone Number' },
   { id: 'actions', label: 'Actions', disableSorting: true }
 ];
 
@@ -60,6 +60,7 @@ export function Order({
     }
   });
   const [openPopup, setOpenPopup] = useState(false);
+  const [recordForEdit, setRecordForEdit] = useState(null);
   const [notify, setNotify] = useState({
     isOpen: false,
     message: '',
@@ -90,11 +91,11 @@ export function Order({
 
   useEffect(() => {
     LoadOrders(1);
-    return () => {};
+    return () => { };
   }, []);
 
   const openInPopup = item => {
-    // setRecordForEdit(item)
+    setRecordForEdit(item)
     setOpenPopup(true);
   };
 
@@ -105,6 +106,7 @@ export function Order({
         <StatComponent />
         <ToastContainer />
         <Paper className={classes.pageContent}>
+          <h1>Order</h1>
           <Toolbar></Toolbar>
           <TblContainer>
             <TblHead />
@@ -112,10 +114,18 @@ export function Order({
               {orders.map(item => (
                 <TableRow key={item.id}>
                   <TableCell>{item.transactionReference}</TableCell>
-                  <TableCell>{item.additionalInfo}</TableCell>
+                  <TableCell>{item.email}</TableCell>
                   <TableCell>{item.statusName}</TableCell>
-                  <TableCell>{item.accountNumber}</TableCell>
-                  <TableCell></TableCell>
+                  <TableCell>{item.phoneNumber}</TableCell>
+                  <TableCell>
+                    <Controls.ActionButton
+                      color="primary"
+                      onClick={() => {
+                        openInPopup(item)
+                      }}>
+                      <EditOutlinedIcon fontSize="small" />
+                    </Controls.ActionButton>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
@@ -129,9 +139,13 @@ export function Order({
           />
         </Paper>
         <Popup
-          title='Product Category Form'
+          title='Order Form'
           openPopup={openPopup}
-          setOpenPopup={setOpenPopup}></Popup>
+          setOpenPopup={setOpenPopup}>
+          <OrderForm
+            recordForEdit={recordForEdit}
+          />
+        </Popup>
         <Notification notify={notify} setNotify={setNotify} />
         <ConfirmDialog
           confirmDialog={confirmDialog}

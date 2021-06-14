@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
-import { Grid, } from '@material-ui/core';
+import React, { useEffect,useState } from 'react'
+import { Grid,Button } from '@material-ui/core';
 import Controls from "../../../controls/Controls";
 import { useForm, Form } from '../../../controls/useForm';
+
 
 const initialFValues = {
     id: 0,
@@ -11,6 +12,7 @@ const initialFValues = {
 }
 
 export default function AddProductCategoryForm(props) {
+    const [file, setFile] = useState(null)
     const { addProductCategory, recordForEdit } = props
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
@@ -25,6 +27,11 @@ export default function AddProductCategoryForm(props) {
             return Object.values(temp).every(x => x === "")
     }
 
+
+    const selectFile = (event) => {
+        setFile(event.target.files[0]);
+        
+    }
     const {
         values,
         setValues,
@@ -38,8 +45,9 @@ export default function AddProductCategoryForm(props) {
         e.preventDefault()
         if (validate()) {
     
-            
-            addProductCategory(values, resetForm);
+            var data = { ...values, formFile: file }
+            console.log(data)
+            addProductCategory(data, resetForm);
         }
     }
 
@@ -61,7 +69,21 @@ export default function AddProductCategoryForm(props) {
                         onChange={handleInputChange}
                         error={errors.name}
                     />
-                  
+                     <label style={{ marginLeft: '10px' }} htmlFor="btn-upload">
+                        <input
+                            id="btn-upload"
+                            name="btn-upload"
+                            style={{ display: 'none' }}
+                            type="file"
+                            accept="image/*"
+                            onChange={selectFile} />
+                        <Button
+                            className="btn-choose"
+                            variant="outlined"
+                            component="span" >
+                            Choose Image
+                       </Button>
+                    </label>
                     <Controls.Input
                         label="Description"
                         name="description"

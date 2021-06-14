@@ -82,6 +82,10 @@ class App extends React.Component {
       <ThemeProvider theme={theme}>
         <Router>
           <Switch>
+          <Route exact path="/" render={() => (
+           localStorage.getItem("access_token") !=undefined ? <Redirect to="/main/order" /> : <LoginComponent />
+            )} />
+
             <Route path="/user" component={OnBoardingLayout} />
             <ProtectedRoute
               isAuthenticated={this.isAuthenticated}
@@ -104,7 +108,7 @@ class App extends React.Component {
               <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/services' component={Service} />
             </LoadingOverlay>
 
-            <Route exact path="/" component={LoginComponent} />
+           
 
           </Switch>
         </Router>

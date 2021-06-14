@@ -45,7 +45,6 @@ const headCells = [
   { id: 'amount', label: 'Amount' },
   { id: 'isActive', label: 'Is Active' },
   { id: '', label: '' },
-  { id: 'actions', label: 'Actions', disableSorting: true }
 ];
 
 export function Subscription({
@@ -141,6 +140,7 @@ export function Subscription({
         <ToastContainer />
         <div style={{ margin: '10px 0px 0px 80px', width: '95%' }}></div>
         <Paper className={classes.pageContent}>
+          <h1>Subscription</h1>
           <Toolbar>
             <Controls.Button
               text='Add New'
@@ -161,7 +161,6 @@ export function Subscription({
                   <TableCell>{item.planName}</TableCell>
                   <TableCell>{item.amount}</TableCell>
                   <TableCell>{item.isActive.toString()}</TableCell>
-                  <TableCell></TableCell>
                   <TableCell>
                     <Controls.ActionButton
                       color='primary'

@@ -13,8 +13,7 @@ function* workerSaga(action) {
 
         yield put({ type: "DISPLAY_LOADER" });
         let payload = {}
-       
-        var url=`api/SetUp/update-booking/${action.payload.statusId}/${action.payload.transactionReference}`
+        var url=`update-booking/${action.payload.statusId}/${action.payload.transactionReference}`
         yield request("put",{},url).then(response => {
             payload = response;
         });

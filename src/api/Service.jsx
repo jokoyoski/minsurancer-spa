@@ -2,8 +2,8 @@ import axios from 'axios';
 
 
 
-//const baseUrl = "https://localhost:5001/"
-const baseUrl="http://nanoreward-001-site2.etempurl.com/"
+const baseUrl = "https://localhost:5001/"
+//const baseUrl="https://minsurancer.net"
 
 
 export function request(method, body, url) {
@@ -52,8 +52,10 @@ export function request2(method, body, url) {
   bodyFormData.append('productCategoryId', body.productCategoryId);
   bodyFormData.append('id', body.id);
   bodyFormData.append('productName', body.productName);
-  //bodyFormData.append('price', body.price);
-  //bodyFormData.append('price', body.price);
+  bodyFormData.append('file', body.formFile);
+  bodyFormData.append('name', body.name);
+  bodyFormData.append('description', body.description);
+  bodyFormData.append('imageId', body.imageId);
   var accessToken = null;
   var token = localStorage.getItem("access_token")
   if (token != 'undefined') {

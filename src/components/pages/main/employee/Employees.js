@@ -139,18 +139,6 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , c
             <Column flexGrow={1}>
                 <StatComponent />
                 <ToastContainer />
-                <div style={{ margin: '10px 0px 0px 80px', width: '95%', }}>
-                    <Controls.Input
-                        label="Search Employees"
-                        className={classes.searchInput}
-                        InputProps={{
-                            startAdornment: (<InputAdornment position="start">
-                                <Search />
-                            </InputAdornment>)
-                        }}
-                        onChange={handleSearch}
-                    />
-                </div>
                 <Paper className={classes.pageContent}>
                     <Toolbar>
                         <Controls.Button

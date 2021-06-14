@@ -19,7 +19,6 @@ function* workerSaga(action) {
         yield request("get", {}, formatUrl).then(response => {
             payload = response;
         });
-        console.log(payload.subscriptions)
         yield put({ type: "SUBSCRIPTIONS_LIST", payload: payload.subscriptions})
         yield put({ type: "CURRENT_PAGE", payload: payload.currentPage })
         yield put({ type: "ITEMS_PER_PAGE", payload: payload.pageSize })

@@ -43,7 +43,6 @@ const useStyles = makeStyles(theme => ({
 const headCells = [
   { id: 'name', label: 'Name' },
   { id: 'isActive', label: 'Is Active' },
-  { id: '', label: '' },
   { id: 'actions', label: 'Actions', disableSorting: true }
 ];
 
@@ -159,8 +158,6 @@ export function Locations({
                 <TableRow key={item.id}>
                   <TableCell>{item.name}</TableCell>
                   <TableCell>{item.isActive.toString()}</TableCell>
-                  <TableCell></TableCell>
-
                   <TableCell>
                     <Controls.ActionButton
                       color='primary'

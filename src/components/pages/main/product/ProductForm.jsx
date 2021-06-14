@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Grid, } from '@material-ui/core';
+import React, { useEffect,useState } from 'react'
+import { Grid,Button } from '@material-ui/core';
 import Controls from "../../../controls/Controls";
 import { useForm, Form } from '../../../controls/useForm';
 
@@ -21,6 +21,7 @@ const initialFValues = {
 
 export default function ProductForm(props) {
     const { addOrEdit, recordForEdit,categories } = props
+    const [file, setFile] = useState(null)
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
 
@@ -37,6 +38,11 @@ export default function ProductForm(props) {
             return Object.values(temp).every(x => x === "")
     }
 
+    const selectFile = (event) => {
+        setFile(event.target.files[0]);
+    }
+
+
     const {
         values,
         setValues,
@@ -48,7 +54,9 @@ export default function ProductForm(props) {
     const handleSubmit = e => {
         e.preventDefault()
         if (validate()) {
-            addOrEdit(values, resetForm);
+            var data = { ...values, formFile: file }
+            console.log(data)
+            addOrEdit(data, resetForm);
         }
     }
 
@@ -71,6 +79,21 @@ export default function ProductForm(props) {
                         onChange={handleInputChange}
                         error={errors.productName}
                     />
+                     <label style={{ marginLeft: '10px' }} htmlFor="btn-upload">
+                        <input
+                            id="btn-upload"
+                            name="btn-upload"
+                            style={{ display: 'none' }}
+                            type="file"
+                            accept="image/*"
+                            onChange={selectFile} />
+                        <Button
+                            className="btn-choose"
+                            variant="outlined"
+                            component="span" >
+                            Choose Image
+                       </Button>
+                    </label>
                     <Controls.Input
                         label="Product Price"
                         name="price"
@@ -79,8 +102,8 @@ export default function ProductForm(props) {
                         onChange={handleInputChange}
                         error={errors.price}
                     />
-                    
-
+                
+                    {values.imageId && <img src={values.imageId} />}
                 </Grid>
                 <Grid item xs={6}>
                     <Controls.Select

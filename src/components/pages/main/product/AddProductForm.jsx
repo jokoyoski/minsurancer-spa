@@ -1,5 +1,5 @@
-import React, { useEffect } from 'react'
-import { Grid, } from '@material-ui/core';
+import React, { useEffect,useState } from 'react'
+import { Grid,Button } from '@material-ui/core';
 import Controls from "../../../controls/Controls";
 import { useForm, Form } from '../../../controls/useForm';
 
@@ -15,12 +15,15 @@ const initialFValues = {
     productCategoryId: '',
     productName: '',
     price: '',
-    
+
 
 }
 
+
+
 export default function AddProductForm(props) {
-    const { addOrEdit, recordForEdit,categories } = props
+    const { addOrEdit, recordForEdit, categories } = props
+    const [file, setFile] = useState(null)
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
 
@@ -48,10 +51,26 @@ export default function AddProductForm(props) {
     const handleSubmit = e => {
         e.preventDefault()
         if (validate()) {
-            addOrEdit(values, resetForm);
+            var data = { ...values, formFile: file }
+            console.log(data)
+            addOrEdit(data, resetForm);
         }
     }
+    var fileRecord = null;
+    var state = {
+        currentFile: undefined,
+        previewImage: undefined,
+        progress: 0,
 
+        message: "",
+        isError: false,
+        imageInfos: [],
+    };
+
+    const selectFile = (event) => {
+        setFile(event.target.files[0]);
+        
+    }
     useEffect(() => {
         if (recordForEdit !== null)
             setValues({
@@ -60,7 +79,7 @@ export default function AddProductForm(props) {
     }, [recordForEdit])
 
     return (
-      
+
         <Form onSubmit={handleSubmit}>
             <Grid container>
                 <Grid item xs={6}>
@@ -75,11 +94,10 @@ export default function AddProductForm(props) {
                         label="Product Price"
                         name="price"
                         value={values.price || ''}
-
                         onChange={handleInputChange}
                         error={errors.price}
                     />
-                    
+
 
                 </Grid>
                 <Grid item xs={6}>
@@ -92,7 +110,22 @@ export default function AddProductForm(props) {
                         error={errors.categoryId}
                     />
 
-                   
+                    <label style={{ marginLeft: '10px' }} htmlFor="btn-upload">
+                        <input
+                            id="btn-upload"
+                            name="btn-upload"
+                            style={{ display: 'none' }}
+                            type="file"
+                            accept="image/*"
+                            onChange={selectFile} />
+                        <Button
+                            className="btn-choose"
+                            variant="outlined"
+                            component="span" >
+                            Choose Image
+                       </Button>
+                    </label>
+
                     <div>
                         <Controls.Button
                             type="submit"

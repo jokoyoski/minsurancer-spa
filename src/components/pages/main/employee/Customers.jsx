@@ -141,7 +141,7 @@ export function Customers({ users, UpdateUser, LoadUsers, cacNumber, AddUser , c
                 <ToastContainer />
                 <div style={{ margin: '10px 0px 0px 80px', width: '95%', }}>
                     <Controls.Input
-                        label="Search Employees"
+                        label="Search Customers"
                         className={classes.searchInput}
                         InputProps={{
                             startAdornment: (<InputAdornment position="start">

@@ -1,5 +1,5 @@
 import { takeEvery, put } from "redux-saga/effects";
-import { request } from '../../../api/Service';
+import { request,request2 } from '../../../api/Service';
 import { getErrorMessage } from '../../../components/utils/errorHandler';
 import { toast } from 'react-toastify';
 import history from '../../../router/browserrouter';
@@ -13,7 +13,7 @@ function* workerSaga(action) {
         yield put({ type: "DISPLAY_LOADER" });
         let payload = {};
         var url="api/SetUp/add-product-category";
-        yield request("post", action.payload, url).then(response => {
+        yield request2("post", action.payload, url).then(response => {
             payload = response;
         });
         toast.success(payload)

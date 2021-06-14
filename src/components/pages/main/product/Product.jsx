@@ -42,7 +42,7 @@ const useStyles = makeStyles(theme => ({
 
 const headCells = [
   { id: 'productName', label: 'Product Name' },
-  { id: 'productDescription', label: 'Product DescriptionD' },
+  { id: 'productDescription', label: 'Price' },
   { id: 'categoryName', label: 'Category Name' },
   { id: 'status', label: 'Status' },
   { id: 'actions', label: 'Actions', disableSorting: true }
@@ -137,6 +137,7 @@ export function Product({
         <StatComponent />
         <ToastContainer />
         <Paper className={classes.pageContent}>
+          <h1>Product</h1>
           <Toolbar>
             <Controls.Button
               text='Add New'
@@ -155,7 +156,7 @@ export function Product({
               {recordsAfterPagingAndSorting().map(item => (
                 <TableRow key={item.id}>
                   <TableCell>{item.productName}</TableCell>
-                  <TableCell>{item.productDescription}</TableCell>
+                  <TableCell>{item.price}</TableCell>
                   <TableCell>{item.categoryName}</TableCell>
                   <TableCell>{item.isActive.toString()}</TableCell>
                   <TableCell>

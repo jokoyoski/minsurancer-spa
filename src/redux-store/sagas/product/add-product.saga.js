@@ -14,6 +14,7 @@ function* workerSaga(action) {
         let payload = {};
        // var url = 'add-product?CompanyId=' + action.payload.companyId + '&CategoryId=' + action.payload.categoryId + '&CreatedBy=1' + '&ImageId=hhhh&ProductName=' + action.payload.productName + '&Unit=' + action.payload.unit + '&ProductDescription=' + action.payload.productDescription + '&SKU=' + action.payload.sku + '&Returnable=' + action.payload.returnable;
        var url='api/SetUp/add-product'
+       console.log(action.payload)
        yield request2("post", action.payload, url).then(response => {
         payload = response;
     });
