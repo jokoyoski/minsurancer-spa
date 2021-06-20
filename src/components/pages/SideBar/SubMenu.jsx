@@ -4,7 +4,6 @@ import '../SideBar/side-menu.styles.scss';
 import history from '../../../router/browserrouter';
 import { withRouter } from 'react-router-dom';
 export const SubMenu = props => {
-  console.log(props);
   const [buttonIdsArray, setIds] = useState([]);
   const [path, setPath] = useState('');
   const isMounted = useRef(false);

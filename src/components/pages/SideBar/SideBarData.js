@@ -27,6 +27,11 @@ export const SideBarData = [
                 icon: <i className="fas fa-cubes"></i>,
             },
             {
+                title: 'Ticket',
+                path: '/main/tickets',
+                icon: <i className="fas fa-ticket-alt"></i>,
+            },
+            {
                 title: 'Location Managment',
                 path: '/main/locations',
                 icon: <i className="fas fa-map-marker-alt"></i>,

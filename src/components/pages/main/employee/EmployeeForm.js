@@ -18,6 +18,7 @@ const initialFValues = {
     lastName: '',
     phonenNmber: '',
     email: '',
+    roleId:'',
     city: '',
     roleId: '',
     gender: 'male',
@@ -30,11 +31,15 @@ const initialFValues = {
 
 
 export default function EmployeeForm(props) {
+    console.log(props)
+    var buttonloader=false;
+    const {roles,recordForEdit,setOpenPopup,setAddOpenPopup}=props;
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
-        console.log(fieldValues)
         if ('firstName' in fieldValues)
             temp.firstName = fieldValues.firstName ? "" : "This field is required."
+             if ('roleId' in fieldValues)
+            temp.roleId = fieldValues.roleId ? "" : "This field is required."
         if ('lastName' in fieldValues)
             temp.lastName = fieldValues.lastName ? "" : "This lastName is required."
         if ('email' in fieldValues)
@@ -45,7 +50,6 @@ export default function EmployeeForm(props) {
         setErrors({
             ...temp
         })
-        console.log(errors)
         if (fieldValues === values)
             return Object.values(temp).every(x => x === "")
     }
@@ -53,6 +57,7 @@ export default function EmployeeForm(props) {
 
     useEffect(() => {
         store.dispatch({ type: "DISPLAY_LOADER" })
+       
         request('get', {}, `api/Authentication/user/${localStorage.getItem("email")}`).then(data => {
             setValues({
                 ...data
@@ -77,8 +82,13 @@ export default function EmployeeForm(props) {
         e.preventDefault()
         if (validate()) {
             store.dispatch({ type: "DISPLAY_LOADER" })
+             buttonloader=true;
+            store.dispatch({ type: "LOADING_BUTTON_SPINNER" })
             request('post', values, `api/Authentication/update-user`).then(data => {
                 store.dispatch({ type: "DISPLAY_LOADER" })
+                store.dispatch({ type: "LOADING_BUTTON_SPINNER" })
+                setOpenPopup(false)
+                setAddOpenPopup(false)
             }
             )
         }
@@ -122,6 +132,14 @@ export default function EmployeeForm(props) {
                             onChange={handleInputChange}
                             error={errors.email}
                         />
+
+                          <Controls.Select
+                           name="roleId"
+                           label="Roles"
+                           value={recordForEdit.roleId || ""}
+                          onChange={handleInputChange}
+                          options={roles}
+                         />
                         <Controls.Input
                             label="Phone Number"
                             name="phoneNumber"
@@ -132,9 +150,11 @@ export default function EmployeeForm(props) {
                         />
 
                     </div>
-
+        
                 </div>
-
+         <div>
+              <button style={{backgroundColor:"#333996"}} className='final-button'>Sign In <i className={store.getState().utilityReducer.buttonloader=== true ? "fa fa-spinner fa-spin" : ''}></i></button>
+          </div>
             </Form>
         </div>
 

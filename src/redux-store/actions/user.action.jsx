@@ -19,6 +19,12 @@ export function   LoadOrders (id) {
  console.log(id)
   return { type: "LOAD_ORDERS", payload: { id } };
 }
+
+
+export function   LoadTickets (id) {
+  console.log(id)
+   return { type: "LOAD_TICKETS", payload: { id } };
+ }
 export function   LoadBookings (id) {
   console.log(id)
    return { type: "LOAD_BOOKING", payload: { id } };
@@ -65,8 +71,19 @@ export function UpdateBooking(payload) {
 }
 
 
+export function UpdateTicket(payload) {
+ 
+  return { type: "UPDATE_TICKET", payload: { payload } };
+}
+
+
+export function ActivateProductCategory(id) {
+ 
+  return { type: "ACTIVATE_PRODUCT_CATEGORY", payload: { id } };
+}
+
 export function DeleteProductCategory(id) {
-  console.log(id)
+ 
   return { type: "DELETE_PRODUCT_CATEGORY", payload: { id } };
 }
 

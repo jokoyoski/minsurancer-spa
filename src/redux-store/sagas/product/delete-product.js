@@ -11,7 +11,7 @@ function* workerSaga(action) {
     try {
         yield put({ type: "DISPLAY_LOADER" });
         let payload = {};
-        var url = 'api/SetUp/delete-product-by-id/' + action.payload;
+        var url = 'api/SetUp/delete-product-by-id?id=' + action.payload;
         yield request("delete", action.payload, url).then(response => {
             payload = response;
         });

@@ -21,6 +21,11 @@ function* workerSaga(action) {
             payload = response;
         });
         yield put({ type: "USERS_LIST", payload: payload })
+          var newFormatUrl = 'api/Authentication/get-roles-dropdown' ;
+        yield request("get", {}, newFormatUrl).then(response => {
+            payload = response;
+        });
+        console.log(payload)
         yield put({ type: "DISPLAY_LOADER" });
     } catch (e) {
         yield put({ type: "LOADING_BUTTON_SPINNER" });

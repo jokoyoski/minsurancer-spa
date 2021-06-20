@@ -2,6 +2,7 @@ import React, { useEffect } from 'react'
 import { Grid, } from '@material-ui/core';
 import Controls from "../../../controls/Controls";
 import { useForm, Form } from '../../../controls/useForm';
+import { store } from '../../../../redux-store/store';
 import * as employeeService from "../../../../services/employeeService";
 
 
@@ -27,7 +28,7 @@ const initialFValues = {
 }
 
 export default function AddEmployeeForm(props) {
-    const { addEmployee, recordForEdit, cacNumber, userType } = props
+    const { addEmployee, recordForEdit, cacNumber, userType,roles,setOpenPopup,setAddOpenPopup } = props
     const validate = (fieldValues = values) => {
         let temp = { ...errors }
         if ('firstName' in fieldValues)
@@ -60,7 +61,11 @@ export default function AddEmployeeForm(props) {
         e.preventDefault()
         if (validate()) {
             var result = { ...values, 'cacNumber': cacNumber, 'userType': userType }
+              store.dispatch({ type: "LOADING_BUTTON_SPINNER" })
             addEmployee(result, resetForm);
+            setOpenPopup(false)
+           setAddOpenPopup(false)
+          store.dispatch({ type: "LOADING_BUTTON_SPINNER" })
         }
     }
 
@@ -96,6 +101,13 @@ export default function AddEmployeeForm(props) {
                         onChange={handleInputChange}
                         error={errors.email}
                     />
+                      <Controls.Select
+                           name="roleId"
+                           label="Roles"
+                           value={values.roleId || ""}
+                          onChange={handleInputChange}
+                          options={roles}
+                         />
                     <Controls.Input
                         label="Phone Number"
                         name="phoneNumber"
@@ -104,11 +116,9 @@ export default function AddEmployeeForm(props) {
                         onChange={handleInputChange}
                         error={errors.phoneNumber}
                     />
-
                     <div>
-                        <Controls.Button
-                            type="submit"
-                            text="Submit" />
+                            <button style={{backgroundColor:"#333996"}} className='final-button'>Sign In <i className={store.getState().utilityReducer.buttonloader === true ? "fa fa-spinner fa-spin" : ''}></i></button>
+          
                     </div>
                 </Grid>
 

@@ -22,8 +22,6 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function usePaginationTable(currentPage,itemsPerpage,totalItems,totalPages,records, headCells,filterFn) {
-    console.log(records)
-    console.log('inside usetable ...')
     const classes = useStyles();
 
     const pages = [5, 10, 25]
@@ -31,7 +29,7 @@ export default function usePaginationTable(currentPage,itemsPerpage,totalItems,t
     const [rowsPerPage, setRowsPerPage] = useState(pages[page])
     const [order, setOrder] = useState()
     const [orderBy, setOrderBy] = useState()
-    console.log('all state set')
+
     const TblContainer = props => (
         <Table className={classes.table}>
             {props.children}
@@ -39,7 +37,7 @@ export default function usePaginationTable(currentPage,itemsPerpage,totalItems,t
     )
 
     const TblHead = props => {
-        console.log('table head method')
+
         const handleSortRequest = cellId => {
             const isAsc = orderBy === cellId && order === "asc";
             setOrder(isAsc ? 'desc' : 'asc');
@@ -67,18 +65,14 @@ export default function usePaginationTable(currentPage,itemsPerpage,totalItems,t
     }
 
     const handleChangePage = (event, newPage) => {
-        console.log('handle change method')
-        console.log(newPage)
         setPage(newPage);
     }
 
     const handleChangeRowsPerPage = event => {
-        console.log('handle rows per page')
-        console.log(event.target.value)
         setRowsPerPage(parseInt(event.target.value, 10))
         setPage(0);
     }
-    console.log('before tbl pagination')
+
     const TblPagination = () => (<TablePagination
         component="div"
         page={page}
@@ -90,7 +84,6 @@ export default function usePaginationTable(currentPage,itemsPerpage,totalItems,t
     />)
 
     function stableSort(array, comparator) {
-        console.log('inside stable sort')
         const stabilizedThis = array.map((el, index) => [el, index]);
         stabilizedThis.sort((a, b) => {
             const order = comparator(a[0], b[0]);
@@ -101,7 +94,6 @@ export default function usePaginationTable(currentPage,itemsPerpage,totalItems,t
     }
 
     function getComparator(order, orderBy) {
-        console.log('comparator')
         return order === 'desc'
             ? (a, b) => descendingComparator(a, b, orderBy)
             : (a, b) => -descendingComparator(a, b, orderBy);
@@ -118,13 +110,10 @@ export default function usePaginationTable(currentPage,itemsPerpage,totalItems,t
     }
 
     const recordsAfterPagingAndSorting = () => {
-        console.log('inside records after sorting')
         var record= stableSort(filterFn.fn(records), getComparator(order, orderBy))
             .slice(page * rowsPerPage, (page + 1) * rowsPerPage)
-            console.log(record)
             return record;
     }
-    console.log('about to return')
     return {
         TblContainer,
         TblHead,

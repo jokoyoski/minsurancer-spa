@@ -12,8 +12,11 @@ import {
 } from '@material-ui/core';
 import useTable from '../../../utilities/useTable';
 import { ToastContainer } from 'react-toastify';
+import { request } from '../../../../api/Service';
+import { store } from '../../../../redux-store/store';
 import StatComponent from '../../stat-page/StatComponent';
 import Pagination from "../../../utilities/Pagination";
+import DoneIcon from '@material-ui/icons/Done';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
 import Controls from '../../../controls/Controls';
@@ -71,6 +74,17 @@ export function Product({
     message: '',
     type: ''
   });
+   const ActivateProduct=(id)=>{
+     request('post', {}, `api/SetUp/activate-product-by-id?id=${id}`).then(data => {
+       var payload=1;
+        store.dispatch({ type: "LOAD_PRODUCT",payload})
+          setConfirmDialog({
+          ...confirmDialog,
+           isOpen: false
+         });
+        }
+        )
+  }
   const [confirmDialog, setConfirmDialog] = useState({
     isOpen: false,
     title: '',
@@ -108,6 +122,7 @@ export function Product({
     resetForm();
     // setRecordForEdit(null)
     setOpenPopup(false);
+     setAddOpenPopup(false);
   };
 
   const addProduct = (product, resetForm) => {
@@ -116,6 +131,7 @@ export function Product({
     resetForm();
     setRecordForEdit(null);
     setOpenPopup(false);
+     setAddOpenPopup(false);
   };
 
   const openInPopup = item => {
@@ -167,7 +183,9 @@ export function Product({
                       }}>
                       <EditOutlinedIcon fontSize='small' />
                     </Controls.ActionButton>
-                    <Controls.ActionButton
+                   
+                    {
+                      item.isActive.toString()=='true' &&  <Controls.ActionButton
                       color='secondary'
                       onClick={() => {
                         setConfirmDialog({
@@ -181,6 +199,25 @@ export function Product({
                       }}>
                       <CloseIcon fontSize='small' />
                     </Controls.ActionButton>
+                    }
+                  
+
+                   {
+                      item.isActive.toString()=='false' &&  <Controls.ActionButton
+                      color='secondary'
+                      onClick={() => {
+                        setConfirmDialog({
+                          isOpen: true,
+                          title: 'Are you sure to activate this record?',
+                          subTitle: "You can't undo this operation",
+                          onConfirm: () => {
+                            ActivateProduct(item.id);
+                          }
+                        });
+                      }}>
+                      <DoneIcon fontSize='small' />
+                    </Controls.ActionButton>
+                    }
                   </TableCell>
                 </TableRow>
               ))}

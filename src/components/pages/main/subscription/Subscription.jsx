@@ -12,7 +12,10 @@ import {
 } from '@material-ui/core';
 import useTable from '../../../utilities/useTable';
 import { ToastContainer } from 'react-toastify';
+import { request } from '../../../../api/Service';
 import StatComponent from '../../stat-page/StatComponent';
+import DoneIcon from '@material-ui/icons/Done';
+import { store } from '../../../../redux-store/store';
 import 'react-toastify/dist/ReactToastify.css';
 import { connect } from 'react-redux';
 import Controls from '../../../controls/Controls';
@@ -102,10 +105,21 @@ export function Subscription({
       }
     });
   };
+  const ActivateSubscription=(id)=>{
+     request('post', {}, `api/SetUp/activate-subscription-by-id?id=${id}`).then(data => {
+       var payload=1;
+        store.dispatch({ type: "LOAD_SUBSCRIPTIONS",payload})
+          setConfirmDialog({
+          ...confirmDialog,
+           isOpen: false
+         });
+        }
+        )
+  }
 
   const addOrEdit = (subscription, resetForm) => {
     if (subscription.id === 0) Addsubscription(subscription);
-    else console.log(subscription);
+    else;
     Updatesubscription(subscription);
     resetForm();
     setAddOpenPopup(false);
@@ -169,7 +183,8 @@ export function Subscription({
                       }}>
                       <EditOutlinedIcon fontSize='small' />
                     </Controls.ActionButton>
-                    <Controls.ActionButton
+                    {
+                      item.isActive.toString()=='true' &&  <Controls.ActionButton
                       color='secondary'
                       onClick={() => {
                         setConfirmDialog({
@@ -183,6 +198,25 @@ export function Subscription({
                       }}>
                       <CloseIcon fontSize='small' />
                     </Controls.ActionButton>
+                    }
+                  
+
+                   {
+                      item.isActive.toString()=='false' &&  <Controls.ActionButton
+                      color='secondary'
+                      onClick={() => {
+                        setConfirmDialog({
+                          isOpen: true,
+                          title: 'Are you sure to activate this record?',
+                          subTitle: "You can't undo this operation",
+                          onConfirm: () => {
+                            ActivateSubscription(item.id);
+                          }
+                        });
+                      }}>
+                      <DoneIcon fontSize='small' />
+                    </Controls.ActionButton>
+                    }
                   </TableCell>
                 </TableRow>
               ))}
@@ -226,7 +260,6 @@ export function Subscription({
 }
 
 function mapStateToProps(state) {
-  console.log(state);
   return {
     currentPage: state.utilityReducer.currentPage,
     itemsPerPage: state.utilityReducer.itemsPerPage,

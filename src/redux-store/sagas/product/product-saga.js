@@ -20,7 +20,6 @@ function* workerSaga(action) {
         yield request("get", {}, formatUrl).then(response => {
             payload = response;
         });
-        console.log(payload)
         yield put({ type: "PRODUCT_LIST", payload: payload.products })
         yield put({ type: "CURRENT_PAGE", payload: payload.currentPage })
         yield put({ type: "ITEMS_PER_PAGE", payload: payload.pageSize })

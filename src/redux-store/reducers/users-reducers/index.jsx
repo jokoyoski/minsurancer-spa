@@ -1,6 +1,7 @@
 const initialState = {
     users: [],
     userLocations: [],
+    roles:[],
     companyLocations: []
 
 };
@@ -13,11 +14,12 @@ function usersReducer(state = initialState, action) {
             users: action.payload
         };
         return usersdetails;
+        
     }
-    if (action.type === "USER_LOCATION_LIST") {
+    if (action.type === "ROLES_DROPDOWN_LIST") {
         var locationDetails = {
             ...state,
-            userLocations: action.payload
+            roles: action.payload
         };
         return locationDetails;
     }

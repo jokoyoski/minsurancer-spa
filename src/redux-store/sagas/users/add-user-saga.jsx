@@ -20,6 +20,12 @@ function* workerSaga(action) {
         yield request("get",payload,formatUrl).then(response => {
             payload = response;
         });
+        var newFormatUrl = 'api/Authentication/get-roles-dropdown' ;
+        yield request("get", {}, newFormatUrl).then(response => {
+            payload = response;
+        });
+        console.log(payload)
+        yield put({ type: "ROLES_DROPDOWN_LIST", payload: payload })
         yield put({ type: "USERS_LIST", payload: payload.users })
         yield put({ type: "CURRENT_PAGE", payload: payload.currentPage })
         yield put({ type: "ITEMS_PER_PAGE", payload: payload.pageSize })

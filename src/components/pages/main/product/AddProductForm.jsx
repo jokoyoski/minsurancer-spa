@@ -14,6 +14,7 @@ const initialFValues = {
     id: 0,
     productCategoryId: '',
     productName: '',
+    productDescription :'',
     price: '',
 
 
@@ -29,6 +30,8 @@ export default function AddProductForm(props) {
 
         if ('productName' in fieldValues)
             temp.productName = fieldValues.productName ? "" : "This field is required."
+        if ('productDescription' in fieldValues)
+            temp.productDescription = fieldValues.productDescription ? "" : "This field is required."
         if ('price' in fieldValues)
             temp.price = fieldValues.price ? "" : "This price is required."
         if ('productCategoryId' in fieldValues)
@@ -96,6 +99,13 @@ export default function AddProductForm(props) {
                         value={values.price || ''}
                         onChange={handleInputChange}
                         error={errors.price}
+                    />
+                  <Controls.Input
+                        label="Product Description"
+                        name="productDescription"
+                        value={values.productDescription || ''}
+                        onChange={handleInputChange}
+                        error={errors.productDescription}
                     />
 
 

@@ -28,6 +28,9 @@ import watcherAddServiceSaga from '../redux-store/sagas/service/add-service-saga
 import watcherDeleteServiceSaga   from '../redux-store/sagas/service/delete-service-saga'
 import watcherUpdateServiceSaga from '../redux-store/sagas/service/update-service-saga'
 import watcherGetServicesSaga from '../redux-store/sagas/service/service-saga'
+import watcherGetTicketsSaga from '../redux-store/sagas/tickets/ticket-saga'
+import watcherUpdateTicketSaga from '../redux-store/sagas/tickets/update-ticket-saga'
+
 
 export const UiSagas = [
 
@@ -60,6 +63,9 @@ export const UiSagas = [
   watcherAddServiceSaga(),
   watcherGetServicesSaga(),
   watcherDeleteServiceSaga(),
-  watcherUpdateServiceSaga()
+  watcherUpdateServiceSaga(),
+  watcherGetTicketsSaga(),
+  watcherUpdateTicketSaga()
+
 
 ]

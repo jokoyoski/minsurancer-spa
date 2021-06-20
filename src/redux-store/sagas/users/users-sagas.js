@@ -22,6 +22,12 @@ function* workerSaga(action) {
         yield put({ type: "TOTAL_ITEMS", payload: payload.totalCount })
         yield put({ type: "TOTAL_PAGES", payload: payload.totalPages })
         yield put({ type: "DISPLAY_LOADER", payload: payload })
+          var newFormatUrl = 'api/Authentication/get-roles-dropdown' ;
+        yield request("get", {}, newFormatUrl).then(response => {
+            payload = response;
+        });
+         yield put({ type: "ROLES_DROPDOWN_LIST", payload: payload })
+        console.log(payload)
 
     } catch (e) {
         yield put({ type: "LOADING_BUTTON_SPINNER" });

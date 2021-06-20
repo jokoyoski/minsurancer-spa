@@ -89,7 +89,6 @@ class SidebarComponent extends React.Component {
          var i=0;
 
         const { expanded } = this.state;
-        console.log(expanded)
         const isMobile = this.isMobile();
         var roles = JSON.parse(localStorage.getItem("roles"))
         return (

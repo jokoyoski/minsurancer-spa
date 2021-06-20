@@ -2,8 +2,8 @@ import axios from 'axios';
 
 
 
-const baseUrl = "https://localhost:5001/"
-//const baseUrl="https://minsurancer.net"
+//const baseUrl = "https://localhost:5001/"
+ const baseUrl="https://www.minsurancer.net"
 
 
 export function request(method, body, url) {
@@ -25,7 +25,6 @@ export function request(method, body, url) {
       return status >= 200 && status < 400
     }
   }
-  console.log(config)
   return new Promise(function (resolve, reject) {
     axios(config).then(
       function (response) {
@@ -52,6 +51,7 @@ export function request2(method, body, url) {
   bodyFormData.append('productCategoryId', body.productCategoryId);
   bodyFormData.append('id', body.id);
   bodyFormData.append('productName', body.productName);
+  bodyFormData.append('productDescription', body.productDescription);
   bodyFormData.append('file', body.formFile);
   bodyFormData.append('name', body.name);
   bodyFormData.append('description', body.description);
@@ -75,7 +75,6 @@ export function request2(method, body, url) {
       return status >= 200 && status < 400
     }
   }
-  console.log(config)
   return new Promise(function (resolve, reject) {
     axios(config).then(
       function (response) {

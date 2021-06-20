@@ -14,11 +14,13 @@ import ProtectedRoute from '../router/ProtectedRoute';
 import LoadingOverlay from 'react-loading-overlay';
 import MainProtectedRoute from '../router/MainProtectedRoute';
 import EmployeeForm from '../components/pages/main/employee/EmployeeForm';
+import ViewEmployeeForm from '../components/pages/main/employee/ViewEmployeeForm';
 import Product from '../components/pages/main/product/Product';
 import Location from '../components/pages/main/location/Location';
 import  Order  from '../components/pages/main/order/Order';
 import  Employees  from '../components/pages/main/employee/Employees';
 import Customers  from '../components/pages/main/employee/Customers';
+import Tickets from '../components/pages/main/tickets/Tickets';
 
 
 const theme = createMuiTheme({
@@ -56,9 +58,10 @@ class App extends React.Component {
   constructor(props) {
 
     super();
-
-  
-      this.isAuthenticated=true
+     if(localStorage.getItem("email")!=null){
+       this.isAuthenticated=true
+     }
+    
     
   }
 
@@ -96,9 +99,9 @@ class App extends React.Component {
               active={this.props.spinner}
               spinner
             >
-                 <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/customers' component={Customers} />
-                <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/users' component={Employees} />
-              <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/user' component={EmployeeForm} />
+              <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/customers' component={Customers} />
+              <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/users' component={Employees} />
+              <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/user' component={ViewEmployeeForm} />
               <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/product-category' component={ProductCategory} />
               <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/product' component={Product} />
               <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/locations' component={Location} />
@@ -106,6 +109,7 @@ class App extends React.Component {
               <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/bookings' component={Booking} />
               <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/subscriptions' component={Subscriptions} />
               <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/services' component={Service} />
+              <MainProtectedRoute isAuthenticated={this.isAuthenticated}  path='/main/tickets' component={Tickets} />
             </LoadingOverlay>
 
            

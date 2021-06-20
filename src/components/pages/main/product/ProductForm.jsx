@@ -15,6 +15,7 @@ const initialFValues = {
     productCategoryId: '',
     productName: '',
     price: '',
+    productDescription:''
     
 
 }
@@ -27,6 +28,8 @@ export default function ProductForm(props) {
 
         if ('productName' in fieldValues)
             temp.productName = fieldValues.productName ? "" : "This field is required."
+                  if ('productDescription' in fieldValues)
+            temp.productDescription = fieldValues.productDescription ? "" : "This field is required."
         if ('price' in fieldValues)
             temp.price = fieldValues.price ? "" : "This price is required."
         if ('productCategoryId' in fieldValues)
@@ -79,6 +82,13 @@ export default function ProductForm(props) {
                         onChange={handleInputChange}
                         error={errors.productName}
                     />
+                    <Controls.Input
+                        label="Product Description"
+                        name="productDescription"
+                        value={values.productDescription || ''}
+                        onChange={handleInputChange}
+                        error={errors.productDescription}
+                    />
                      <label style={{ marginLeft: '10px' }} htmlFor="btn-upload">
                         <input
                             id="btn-upload"
@@ -102,7 +112,6 @@ export default function ProductForm(props) {
                         onChange={handleInputChange}
                         error={errors.price}
                     />
-                
                     {values.imageId && <img src={values.imageId} />}
                 </Grid>
                 <Grid item xs={6}>
@@ -114,8 +123,6 @@ export default function ProductForm(props) {
                         options={categories}
                         error={errors.categoryId}
                     />
-
-                   
                     <div>
                         <Controls.Button
                             type="submit"

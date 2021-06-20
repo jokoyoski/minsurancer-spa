@@ -45,9 +45,9 @@ const headCells = [
     { id: 'actions', label: 'Actions', disableSorting: true }
 ]
 
-export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , currentPage, itemsPerPage, totalItems, totalPages}) {
+export function Employees({ users, roles, UpdateUser, LoadUsers, cacNumber, AddUser , currentPage, itemsPerPage, totalItems, totalPages}) {
 
-
+ console.log(roles)
     const classes = useStyles();
     const [recordForEdit, setRecordForEdit] = useState(null)
     const [filterFn, setFilterFn] = useState({ fn: items => { return items; } })
@@ -95,7 +95,6 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , c
             var data = { ...employee, 'userId': employee.id }
         UpdateUser(data)
         resetForm()
-        // setRecordForEdit(null)
         setOpenPopup(false)
         setNotify({
             isOpen: true,
@@ -194,7 +193,10 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , c
                 >
                     <EmployeeForm
                         recordForEdit={recordForEdit}
+                        roles={roles}
                         addOrEdit={addOrEdit}
+                        setAddOpenPopup={setAddOpenPopup}
+                      setOpenPopup={setOpenPopup}
                          />
                 </Popup>
 
@@ -213,11 +215,15 @@ export function Employees({ users, UpdateUser, LoadUsers, cacNumber, AddUser , c
                     title="Employee Form"
                     openPopup={addOpenPopup}
                     setOpenPopup={setAddOpenPopup}
+                      setOpenPopup={setOpenPopup}
                 >
 
                     <AddEmployeeForm
                         recordForEdit={recordForEdit}
-                        addEmployee={addEmployee}
+                         addEmployee={addEmployee}
+                         roles={roles}
+                        setOpenPopup={setOpenPopup}
+                        setAddOpenPopup={setAddOpenPopup}
                         cacNumber={cacNumber}
                       />
                 </Popup>
@@ -250,12 +256,12 @@ function mapStateToProps(state) {
         itemsPerPage: state.utilityReducer.itemsPerPage,
         totalItems: state.utilityReducer.totalItems,
         totalPages: state.utilityReducer.totalPages,
-        userType:state.userReducer.userType
+        userType:state.userReducer.userType,
+        roles:state.usersReducer.roles
 
     };
 }
 const mapDispatchToProps = (dispatch) => ({
-
     UpdateUser(payload) {
         dispatch({ type: "UPDATE_USER", payload });
     },

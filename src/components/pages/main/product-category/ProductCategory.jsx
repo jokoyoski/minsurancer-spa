@@ -11,6 +11,7 @@ import {
   InputAdornment
 } from '@material-ui/core';
 import './product-category.styles.scss';
+import { request } from '../../../../api/Service';
 import usePaginationTable from '../../../utilities/usePaginationTable';
 import Pagination from '../../../utilities/Pagination';
 import { ToastContainer } from 'react-toastify';
@@ -23,6 +24,8 @@ import AddIcon from '@material-ui/icons/Add';
 import Popup from '../../../utilities/Popup';
 import EditOutlinedIcon from '@material-ui/icons/EditOutlined';
 import CloseIcon from '@material-ui/icons/Close';
+import DoneIcon from '@material-ui/icons/Done';
+import { store } from '../../../../redux-store/store';
 import Notification from '../../../utilities/Notification';
 import ConfirmDialog from '../../../utilities/ConfirmDialog';
 import AddProductCategoryForm from './AddProductCategoryForm';
@@ -137,13 +140,25 @@ export function ProductCategory({
     setOpenPopup(false);
   };
 
+  const ActivateProductCategory=(id)=>{
+     request('post', {}, `api/SetUp/activate-product-category?id=${id}`).then(data => {
+       var payload=1;
+        store.dispatch({ type: "LOAD_PRODUCT_CATEGORY",payload})
+          setConfirmDialog({
+          ...confirmDialog,
+           isOpen: false
+         });
+        }
+        )
+  }
+
   const openInPopup = item => {
     setRecordForEdit(item);
     setOpenPopup(true);
   };
 
   const onDelete = id => {
-    console.log(id);
+  
     DeleteProductCategory(id);
     setConfirmDialog({
       ...confirmDialog,
@@ -187,7 +202,8 @@ export function ProductCategory({
                       }}>
                       <EditOutlinedIcon fontSize='small' />
                     </Controls.ActionButton>
-                    <Controls.ActionButton
+                    {
+                      item.isActive.toString()=='true' &&  <Controls.ActionButton
                       color='secondary'
                       onClick={() => {
                         setConfirmDialog({
@@ -201,6 +217,25 @@ export function ProductCategory({
                       }}>
                       <CloseIcon fontSize='small' />
                     </Controls.ActionButton>
+                    }
+                  
+
+                   {
+                      item.isActive.toString()=='false' &&  <Controls.ActionButton
+                      color='secondary'
+                      onClick={() => {
+                        setConfirmDialog({
+                          isOpen: true,
+                          title: 'Are you sure to activate this record?',
+                          subTitle: "You can't undo this operation",
+                          onConfirm: () => {
+                            ActivateProductCategory(item.id);
+                          }
+                        });
+                      }}>
+                      <DoneIcon fontSize='small' />
+                    </Controls.ActionButton>
+                    }
                   </TableCell>
                 </TableRow>
               ))}
@@ -270,6 +305,7 @@ const mapDispatchToProps = dispatch => ({
   DeleteProductCategory(payload) {
     dispatch({ type: 'DELETE_PRODUCT_CATEGORY', payload });
   }
+  
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(ProductCategory);
